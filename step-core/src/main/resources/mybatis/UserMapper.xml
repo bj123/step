@@ -12,7 +12,7 @@
     <result column="country" property="country" jdbcType="VARCHAR" />
     <result column="language" property="language" jdbcType="VARCHAR" />
     <result column="coinNum" property="coinnum" jdbcType="DOUBLE" />
-    <result column="likeStoryId" property="likestoryid" jdbcType="VARCHAR" />
+    <result column="likeId" property="likeid" jdbcType="VARCHAR" />
     <result column="buyTemplateId" property="buytemplateid" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -24,13 +24,13 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into user (openId, nickName, avatarUrl, 
-      gender, city, province, 
-      country, language, coinNum, 
-      likeStoryId, buyTemplateId)
+      gender, city, province,
+      country, language, coinNum,
+      likeId, buyTemplateId)
     values (#{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR}, 
       #{gender,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
-      #{country,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{coinnum,jdbcType=DOUBLE}, 
-      #{likestoryid,jdbcType=VARCHAR}, #{buytemplateid,jdbcType=VARCHAR})
+      #{country,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{coinnum,jdbcType=DOUBLE},
+      #{likeid,jdbcType=VARCHAR}, #{buytemplateid,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.User" >
     update user
@@ -43,19 +43,24 @@
       country = #{country,jdbcType=VARCHAR},
       language = #{language,jdbcType=VARCHAR},
       coinNum = #{coinnum,jdbcType=DOUBLE},
-      likeStoryId = #{likestoryid,jdbcType=VARCHAR},
+      likeId = #{likeid,jdbcType=VARCHAR},
       buyTemplateId = #{buytemplateid,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select id, openId, nickName, avatarUrl, gender, city, province, country, language, 
-    coinNum, likeStoryId, buyTemplateId
+    coinNum, likeId, buyTemplateId
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, openId, nickName, avatarUrl, gender, city, province, country, language, 
-    coinNum, likeStoryId, buyTemplateId
+    coinNum, likeId, buyTemplateId
     from user
+  </select>
+  <select id="getByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, openId, coinNum, nickName, avatarUrl, gender, city, province, country
+    from user
+    where openId = #{openId,jdbcType=INTEGER}
   </select>
 </mapper>

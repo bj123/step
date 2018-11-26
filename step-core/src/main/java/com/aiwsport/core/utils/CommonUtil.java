@@ -1,7 +1,6 @@
 package com.aiwsport.core.utils;
 
 import com.aiwsport.core.constant.stepConstant;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.reflect.MethodUtils;
@@ -63,25 +62,14 @@ public class CommonUtil {
         }
     }
 
-    public static int decrypt(String encryptedData, String iv, String sessionKey, String token,Integer days){
-        JSONObject flagObj = null;
+    public static JSONObject decrypt(String encryptedData, String iv, String sessionKey){
+        JSONObject stepJson = null;
         try {
             byte[] resultByte  = AES.decrypt(Base64.decodeBase64(encryptedData), Base64.decodeBase64(sessionKey),
                     Base64.decodeBase64(iv));
             if(null != resultByte && resultByte.length > 0){
-                JSONObject stepJson = JSONObject.parseObject(new String(resultByte, "UTF-8"));
-                JSONArray stepInfoList =  (JSONArray) stepJson.get("stepInfoList");
+                stepJson = JSONObject.parseObject(new String(resultByte, "UTF-8"));
 
-                if(stepInfoList.size()>0){
-                    flagObj = (JSONObject)stepInfoList.get(0);
-                    for(int i=0;i<stepInfoList.size();i++){
-                        // 遍历 jsonarray 数组，把每一个对象转成 json 对象
-                        JSONObject job = stepInfoList.getJSONObject(i);
-                        if ((Integer)job.get("timestamp") > (Integer)flagObj.get("timestamp")) {
-                            flagObj = job;
-                        }
-                    }
-                }
             }else{
                 logger.info("解密失败");
             }
@@ -90,11 +78,8 @@ public class CommonUtil {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        if (flagObj == null) {
-            return -1;
-        }
-        int toDayStep = (int)flagObj.get("step");
-        return toDayStep;
+
+        return stepJson;
     }
 
 }

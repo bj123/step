@@ -1,7 +1,10 @@
 package com.aiwsport.web.controller;
 
 import com.aiwsport.core.constant.ResultMsg;
-import com.aiwsport.core.service.StepService;
+import com.aiwsport.core.entity.User;
+import com.aiwsport.core.service.StoryService;
+import com.aiwsport.web.utlis.ParseUrl;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +20,52 @@ import org.springframework.web.bind.annotation.RestController;
 public class ServerController {
 
     @Autowired
-    private StepService stepService;
+    private StoryService storyService;
+    private static final String URL1 = "https://api.weixin.qq.com/sns/jscode2session?appid=wx2a3f4b2e7fe9c09b&secret=3a499d875c3b6cabecf1f8f6e9608f92&js_code=";
+    private static final String URL2 = "&grant_type=authorization_code";
 
     private static Logger logger = LogManager.getLogger();
+
+    @RequestMapping("/stroy/decrypt.json")
+    public ResultMsg decrypt(String code, String encryptdata, String iv) throws Exception{
+        JSONObject userInfoObj = null;
+        try {
+            long start = System.currentTimeMillis();
+            String resUser = ParseUrl.getDataFromUrl((URL1+code+URL2));
+            logger.info("------resUser------" + resUser + " ------cost------" + (System.currentTimeMillis()-start));
+            JSONObject userInfo = JSONObject.parseObject(resUser);
+            String sessionKey = String.valueOf(userInfo.get("session_key"));
+            userInfoObj = storyService.decrypt(encryptdata, iv, sessionKey);
+        } catch (Exception e) {
+            logger.error("decrypt is error " + e.getMessage(), e);
+            return new ResultMsg(false, 403, "解密数据用户信息失败");
+        }
+
+        if (userInfoObj == null) {
+            return new ResultMsg(false, 403, "解密数据用户信息失败");
+        }
+
+        return new ResultMsg("decryptOK", userInfoObj);
+    }
+
+    @RequestMapping(value = "/step/onlogin.json")
+    public ResultMsg onlogin(String openid, String province,
+                              String avatarUrl, String nickName, String country, String city, String gender) {
+        User user = null;
+        try {
+            user = storyService.login(openid, province, avatarUrl, nickName, country, city, gender);
+        } catch (Exception e) {
+            logger.error("onlogin is error " + e.getMessage(), e);
+            return new ResultMsg(false, 403, "登录失败");
+        }
+
+        if (user == null) {
+            return new ResultMsg(false, 403, "登录失败");
+        }
+        return new ResultMsg("onloginOK", user);
+    }
+
+
 
     @RequestMapping("/test.json")
     public ResultMsg test() throws Exception{

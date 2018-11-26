@@ -25,7 +25,7 @@ public class AccessHandlerInteceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        authSign(request, "y21gsdi35zas0921ksjxu3la5noiwns5ak821#2*ds+");
+//        authSign(request, "y21gsdi35zas0921ksjxu3la5noiwns5ak821#2*ds+");
         return true;
     }
 

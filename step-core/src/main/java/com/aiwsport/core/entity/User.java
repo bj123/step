@@ -21,7 +21,7 @@ public class User {
 
     private Double coinnum;
 
-    private String likestoryid;
+    private String likeid;
 
     private String buytemplateid;
 
@@ -105,12 +105,12 @@ public class User {
         this.coinnum = coinnum;
     }
 
-    public String getLikestoryid() {
-        return likestoryid;
+    public String getLikeid() {
+        return likeid;
     }
 
-    public void setLikestoryid(String likestoryid) {
-        this.likestoryid = likestoryid;
+    public void setLikeid(String likeid) {
+        this.likeid = likeid;
     }
 
     public String getBuytemplateid() {
