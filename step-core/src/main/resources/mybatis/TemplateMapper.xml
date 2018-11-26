@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aiwsport.core.mapper.TemplateMapper" >
+  <resultMap id="BaseResultMap" type="com.aiwsport.core.entity.Template" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="introductionId" property="introductionid" jdbcType="INTEGER" />
+    <result column="isFree" property="isfree" jdbcType="VARCHAR" />
+    <result column="showModuleType" property="showmoduletype" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="salePrice" property="saleprice" jdbcType="DOUBLE" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from template
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aiwsport.core.entity.Template" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into template (introductionId, isFree, showModuleType, 
+      type, salePrice)
+    values (#{introductionid,jdbcType=INTEGER}, #{isfree,jdbcType=VARCHAR}, #{showmoduletype,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{saleprice,jdbcType=DOUBLE})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.Template" >
+    update template
+    set introductionId = #{introductionid,jdbcType=INTEGER},
+      isFree = #{isfree,jdbcType=VARCHAR},
+      showModuleType = #{showmoduletype,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      salePrice = #{saleprice,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, introductionId, isFree, showModuleType, type, salePrice
+    from template
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, introductionId, isFree, showModuleType, type, salePrice
+    from template
+  </select>
+</mapper>

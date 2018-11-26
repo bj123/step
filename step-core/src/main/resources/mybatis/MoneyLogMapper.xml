@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aiwsport.core.mapper.MoneyLogMapper" >
+  <resultMap id="BaseResultMap" type="com.aiwsport.core.entity.MoneyLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="balance" property="balance" jdbcType="DOUBLE" />
+    <result column="cashback" property="cashback" jdbcType="DOUBLE" />
+    <result column="monetary" property="monetary" jdbcType="DOUBLE" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from money_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aiwsport.core.entity.MoneyLog" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into money_log (userId, balance, cashback, 
+      monetary, type)
+    values (#{userid,jdbcType=INTEGER}, #{balance,jdbcType=DOUBLE}, #{cashback,jdbcType=DOUBLE}, 
+      #{monetary,jdbcType=DOUBLE}, #{type,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.MoneyLog" >
+    update money_log
+    set userId = #{userid,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=DOUBLE},
+      cashback = #{cashback,jdbcType=DOUBLE},
+      monetary = #{monetary,jdbcType=DOUBLE},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, userId, balance, cashback, monetary, type
+    from money_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, userId, balance, cashback, monetary, type
+    from money_log
+  </select>
+</mapper>

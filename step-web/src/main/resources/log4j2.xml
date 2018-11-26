@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="OFF" monitorInterval="86400">
+    <properties>
+        <!--设置日志在硬盘上输出的目录-->
+        <property name="logPath">../logs</property>
+    </properties>
+
+    <Appenders>
+        <!--设置在控制台打印日志-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+        </Console>
+
+        <!--设置级别为INFO日志输出到info.log中-->
+        <RollingFile name="INFO" filename="${logPath}/info.log" filePattern="${logPath}/info.log.%d{yyyyMMdd}">
+            <Filters>
+                <!--设置只输出级别为INFO的日志-->
+                <ThresholdFilter level="INFO"/>
+                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+            <Policies>
+                <!--设置每天打包日志一次-->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="5" />
+        </RollingFile>
+
+        <!--设置级别为WARN日志输出到warn.log中-->
+        <RollingFile name="WARN" filename="${logPath}/warn.log" filePattern="${logPath}/warn.log.%d{yyyyMMdd}">
+            <Filters>
+                <!--设置只输出级别为WARN的日志-->
+                <ThresholdFilter level="WARN"/>
+                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+            <Policies>
+                <!--设置每天打包日志一次-->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="5" />
+        </RollingFile>
+
+        <!--设置级别为ERROR日志输出到error.log中-->
+        <RollingFile name="ERROR" filename="${logPath}/error.log" filePattern="${logPath}/error.log.%d{yyyyMMdd}">
+            <!--设置只输出级别为ERROR的日志-->
+            <ThresholdFilter level="ERROR"/>
+            <PatternLayout pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+            <Policies>
+                <!--设置每天打包日志一次-->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="5" />
+        </RollingFile>
+
+        <RollingFile name="profile_file" filename="${logPath}/profile.log" filePattern="${logPath}/profile.log.%d{yyyyMMdd-HH}">
+            <Filters>
+                <ThresholdFilter level="INFO"/>
+                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %m%n"/>
+            <Policies>
+                <!--设置每天打包日志一次-->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="24" />
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <logger name="com.weibo" level="INFO" additivity="true">
+            <appender-ref ref="INFO" />
+            <appender-ref ref="WARN" />
+            <appender-ref ref="ERROR" />
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="Console"/>
+
+        </root>
+        <logger name="profile" level="INFO" additivity="false">
+            <appender-ref ref="profile_file"/>
+        </logger>
+        <logger name="org.springframework" level="INFO"/>
+        <logger name="org.mybatis" level="INFO"/>
+    </Loggers>
+</Configuration>

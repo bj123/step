@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aiwsport.core.mapper.ShareMapper" >
+  <resultMap id="BaseResultMap" type="com.aiwsport.core.entity.Share" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="invitedUserId" property="inviteduserid" jdbcType="INTEGER" />
+    <result column="beInvitedUserId" property="beinviteduserid" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from share
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aiwsport.core.entity.Share" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into share (invitedUserId, beInvitedUserId)
+    values (#{inviteduserid,jdbcType=INTEGER}, #{beinviteduserid,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.Share" >
+    update share
+    set invitedUserId = #{inviteduserid,jdbcType=INTEGER},
+      beInvitedUserId = #{beinviteduserid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, invitedUserId, beInvitedUserId
+    from share
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, invitedUserId, beInvitedUserId
+    from share
+  </select>
+</mapper>

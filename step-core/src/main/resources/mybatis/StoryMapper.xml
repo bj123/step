@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aiwsport.core.mapper.StoryMapper" >
+  <resultMap id="BaseResultMap" type="com.aiwsport.core.entity.Story" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="templateId" property="templateid" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="isAudition" property="isaudition" jdbcType="VARCHAR" />
+    <result column="storyName" property="storyname" jdbcType="VARCHAR" />
+    <result column="storyDesc" property="storydesc" jdbcType="VARCHAR" />
+    <result column="storyIcon" property="storyicon" jdbcType="VARCHAR" />
+    <result column="storyTime" property="storytime" jdbcType="VARCHAR" />
+    <result column="playCount" property="playcount" jdbcType="INTEGER" />
+    <result column="contentUrl" property="contenturl" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from story
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aiwsport.core.entity.Story" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into story (templateId, sort, isAudition, 
+      storyName, storyDesc, storyIcon, 
+      storyTime, playCount, contentUrl
+      )
+    values (#{templateid,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{isaudition,jdbcType=VARCHAR}, 
+      #{storyname,jdbcType=VARCHAR}, #{storydesc,jdbcType=VARCHAR}, #{storyicon,jdbcType=VARCHAR}, 
+      #{storytime,jdbcType=VARCHAR}, #{playcount,jdbcType=INTEGER}, #{contenturl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.Story" >
+    update story
+    set templateId = #{templateid,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      isAudition = #{isaudition,jdbcType=VARCHAR},
+      storyName = #{storyname,jdbcType=VARCHAR},
+      storyDesc = #{storydesc,jdbcType=VARCHAR},
+      storyIcon = #{storyicon,jdbcType=VARCHAR},
+      storyTime = #{storytime,jdbcType=VARCHAR},
+      playCount = #{playcount,jdbcType=INTEGER},
+      contentUrl = #{contenturl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, templateId, sort, isAudition, storyName, storyDesc, storyIcon, storyTime, 
+    playCount, contentUrl
+    from story
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, templateId, sort, isAudition, storyName, storyDesc, storyIcon, storyTime, 
+    playCount, contentUrl
+    from story
+  </select>
+</mapper>
