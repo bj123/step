@@ -1,8 +1,10 @@
 package com.aiwsport.web.controller;
 
 import com.aiwsport.core.constant.ResultMsg;
+import com.aiwsport.core.entity.Template;
 import com.aiwsport.core.entity.User;
 import com.aiwsport.core.service.StoryService;
+import com.aiwsport.core.showmodel.InitObj;
 import com.aiwsport.web.utlis.ParseUrl;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.logging.log4j.LogManager;
@@ -10,6 +12,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 服务操作
@@ -52,8 +57,16 @@ public class ServerController {
     public ResultMsg onlogin(String openid, String province,
                               String avatarUrl, String nickName, String country, String city, String gender) {
         User user = null;
+        InitObj initObj = new InitObj();
+
         try {
             user = storyService.login(openid, province, avatarUrl, nickName, country, city, gender);
+
+
+            List<Template> banners = storyService.getTemplateByShowModuleType("4");
+            initObj.setBanners(banners);
+
+
         } catch (Exception e) {
             logger.error("onlogin is error " + e.getMessage(), e);
             return new ResultMsg(false, 403, "登录失败");
@@ -62,7 +75,7 @@ public class ServerController {
         if (user == null) {
             return new ResultMsg(false, 403, "登录失败");
         }
-        return new ResultMsg("onloginOK", user);
+        return new ResultMsg("onloginOK", initObj);
     }
 
 

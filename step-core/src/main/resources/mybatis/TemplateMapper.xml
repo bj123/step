@@ -56,4 +56,20 @@
     salePrice, modifytime, createtime, status
     from template
   </select>
+  <select id="search" resultMap="BaseResultMap" parameterType="Map">
+    select id, introductionId, templateName, templateUrl, isFree, showModuleType, type,
+    salePrice, modifytime, createtime, status from template
+    <where>
+      1 = 1
+     <if test="showModuleType!=null">
+      and showModuleType LIKE CONCAT('%',#{showModuleType},'%')
+     </if>
+     <if test="templateName != null">
+       and templateName=#{templateName}
+     </if>
+     <if test="type != null">
+       and type=#{type}
+     </if>
+    </where>
+  </select>
 </mapper>
