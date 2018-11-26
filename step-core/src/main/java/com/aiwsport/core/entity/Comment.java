@@ -9,6 +9,12 @@ public class Comment {
 
     private String content;
 
+    private String createtime;
+
+    private String modifytime;
+
+    private String status;
+
     public Integer getId() {
         return id;
     }
@@ -39,5 +45,29 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
+    }
+
+    public String getModifytime() {
+        return modifytime;
+    }
+
+    public void setModifytime(String modifytime) {
+        this.modifytime = modifytime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

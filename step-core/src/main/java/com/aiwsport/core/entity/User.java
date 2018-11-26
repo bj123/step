@@ -21,9 +21,15 @@ public class User {
 
     private Double coinnum;
 
+    private String buytemplateid;
+
     private String likeid;
 
-    private String buytemplateid;
+    private String createtime;
+
+    private String modifytime;
+
+    private String status;
 
     public Integer getId() {
         return id;
@@ -105,6 +111,14 @@ public class User {
         this.coinnum = coinnum;
     }
 
+    public String getBuytemplateid() {
+        return buytemplateid;
+    }
+
+    public void setBuytemplateid(String buytemplateid) {
+        this.buytemplateid = buytemplateid;
+    }
+
     public String getLikeid() {
         return likeid;
     }
@@ -113,11 +127,27 @@ public class User {
         this.likeid = likeid;
     }
 
-    public String getBuytemplateid() {
-        return buytemplateid;
+    public String getCreatetime() {
+        return createtime;
     }
 
-    public void setBuytemplateid(String buytemplateid) {
-        this.buytemplateid = buytemplateid;
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
+    }
+
+    public String getModifytime() {
+        return modifytime;
+    }
+
+    public void setModifytime(String modifytime) {
+        this.modifytime = modifytime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -8,6 +8,9 @@
     <result column="cashback" property="cashback" jdbcType="DOUBLE" />
     <result column="monetary" property="monetary" jdbcType="DOUBLE" />
     <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="modifytime" property="modifytime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from money_log
@@ -18,9 +21,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into money_log (userId, balance, cashback, 
-      monetary, type)
+      monetary, type, createtime, 
+      modifytime, status)
     values (#{userid,jdbcType=INTEGER}, #{balance,jdbcType=DOUBLE}, #{cashback,jdbcType=DOUBLE}, 
-      #{monetary,jdbcType=DOUBLE}, #{type,jdbcType=VARCHAR})
+      #{monetary,jdbcType=DOUBLE}, #{type,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, 
+      #{modifytime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.MoneyLog" >
     update money_log
@@ -28,16 +33,19 @@
       balance = #{balance,jdbcType=DOUBLE},
       cashback = #{cashback,jdbcType=DOUBLE},
       monetary = #{monetary,jdbcType=DOUBLE},
-      type = #{type,jdbcType=VARCHAR}
+      type = #{type,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      modifytime = #{modifytime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, userId, balance, cashback, monetary, type
+    select id, userId, balance, cashback, monetary, type, createtime, modifytime, status
     from money_log
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, userId, balance, cashback, monetary, type
+    select id, userId, balance, cashback, monetary, type, createtime, modifytime, status
     from money_log
   </select>
 </mapper>

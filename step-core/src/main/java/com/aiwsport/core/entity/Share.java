@@ -7,6 +7,12 @@ public class Share {
 
     private Integer beinviteduserid;
 
+    private String createtime;
+
+    private String modifytime;
+
+    private String status;
+
     public Integer getId() {
         return id;
     }
@@ -29,5 +35,29 @@ public class Share {
 
     public void setBeinviteduserid(Integer beinviteduserid) {
         this.beinviteduserid = beinviteduserid;
+    }
+
+    public String getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
+    }
+
+    public String getModifytime() {
+        return modifytime;
+    }
+
+    public void setModifytime(String modifytime) {
+        this.modifytime = modifytime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

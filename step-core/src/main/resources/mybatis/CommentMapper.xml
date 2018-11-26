@@ -6,6 +6,9 @@
     <result column="userId" property="userid" jdbcType="INTEGER" />
     <result column="stroyId" property="stroyid" jdbcType="INTEGER" />
     <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="modifytime" property="modifytime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from comment
@@ -15,25 +18,30 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into comment (userId, stroyId, content
+    insert into comment (userId, stroyId, content, 
+      createtime, modifytime, status
       )
-    values (#{userid,jdbcType=INTEGER}, #{stroyid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}
+    values (#{userid,jdbcType=INTEGER}, #{stroyid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=VARCHAR}, #{modifytime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.Comment" >
     update comment
     set userId = #{userid,jdbcType=INTEGER},
       stroyId = #{stroyid,jdbcType=INTEGER},
-      content = #{content,jdbcType=VARCHAR}
+      content = #{content,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      modifytime = #{modifytime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, userId, stroyId, content
+    select id, userId, stroyId, content, createtime, modifytime, status
     from comment
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, userId, stroyId, content
+    select id, userId, stroyId, content, createtime, modifytime, status
     from comment
   </select>
 </mapper>

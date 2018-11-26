@@ -13,6 +13,12 @@ public class MoneyLog {
 
     private String type;
 
+    private String createtime;
+
+    private String modifytime;
+
+    private String status;
+
     public Integer getId() {
         return id;
     }
@@ -59,5 +65,29 @@ public class MoneyLog {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
+    }
+
+    public String getModifytime() {
+        return modifytime;
+    }
+
+    public void setModifytime(String modifytime) {
+        this.modifytime = modifytime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

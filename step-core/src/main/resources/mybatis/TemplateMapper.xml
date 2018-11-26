@@ -4,10 +4,15 @@
   <resultMap id="BaseResultMap" type="com.aiwsport.core.entity.Template" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="introductionId" property="introductionid" jdbcType="INTEGER" />
+    <result column="templateName" property="templatename" jdbcType="VARCHAR" />
+    <result column="templateUrl" property="templateurl" jdbcType="VARCHAR" />
     <result column="isFree" property="isfree" jdbcType="VARCHAR" />
     <result column="showModuleType" property="showmoduletype" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="salePrice" property="saleprice" jdbcType="DOUBLE" />
+    <result column="modifytime" property="modifytime" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from template
@@ -17,27 +22,38 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into template (introductionId, isFree, showModuleType, 
-      type, salePrice)
-    values (#{introductionid,jdbcType=INTEGER}, #{isfree,jdbcType=VARCHAR}, #{showmoduletype,jdbcType=VARCHAR}, 
-      #{type,jdbcType=VARCHAR}, #{saleprice,jdbcType=DOUBLE})
+    insert into template (introductionId, templateName, templateUrl, 
+      isFree, showModuleType, type, 
+      salePrice, modifytime, createtime, 
+      status)
+    values (#{introductionid,jdbcType=INTEGER}, #{templatename,jdbcType=VARCHAR}, #{templateurl,jdbcType=VARCHAR}, 
+      #{isfree,jdbcType=VARCHAR}, #{showmoduletype,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{saleprice,jdbcType=DOUBLE}, #{modifytime,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.Template" >
     update template
     set introductionId = #{introductionid,jdbcType=INTEGER},
+      templateName = #{templatename,jdbcType=VARCHAR},
+      templateUrl = #{templateurl,jdbcType=VARCHAR},
       isFree = #{isfree,jdbcType=VARCHAR},
       showModuleType = #{showmoduletype,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
-      salePrice = #{saleprice,jdbcType=DOUBLE}
+      salePrice = #{saleprice,jdbcType=DOUBLE},
+      modifytime = #{modifytime,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, introductionId, isFree, showModuleType, type, salePrice
+    select id, introductionId, templateName, templateUrl, isFree, showModuleType, type, 
+    salePrice, modifytime, createtime, status
     from template
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, introductionId, isFree, showModuleType, type, salePrice
+    select id, introductionId, templateName, templateUrl, isFree, showModuleType, type, 
+    salePrice, modifytime, createtime, status
     from template
   </select>
 </mapper>

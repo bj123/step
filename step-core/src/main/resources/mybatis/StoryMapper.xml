@@ -12,6 +12,9 @@
     <result column="storyTime" property="storytime" jdbcType="VARCHAR" />
     <result column="playCount" property="playcount" jdbcType="INTEGER" />
     <result column="contentUrl" property="contenturl" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="modifytime" property="modifytime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from story
@@ -23,11 +26,13 @@
     </selectKey>
     insert into story (templateId, sort, isAudition, 
       storyName, storyDesc, storyIcon, 
-      storyTime, playCount, contentUrl
+      storyTime, playCount, contentUrl, 
+      createtime, modifytime, status
       )
     values (#{templateid,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{isaudition,jdbcType=VARCHAR}, 
       #{storyname,jdbcType=VARCHAR}, #{storydesc,jdbcType=VARCHAR}, #{storyicon,jdbcType=VARCHAR}, 
-      #{storytime,jdbcType=VARCHAR}, #{playcount,jdbcType=INTEGER}, #{contenturl,jdbcType=VARCHAR}
+      #{storytime,jdbcType=VARCHAR}, #{playcount,jdbcType=INTEGER}, #{contenturl,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=VARCHAR}, #{modifytime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.Story" >
@@ -40,18 +45,21 @@
       storyIcon = #{storyicon,jdbcType=VARCHAR},
       storyTime = #{storytime,jdbcType=VARCHAR},
       playCount = #{playcount,jdbcType=INTEGER},
-      contentUrl = #{contenturl,jdbcType=VARCHAR}
+      contentUrl = #{contenturl,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      modifytime = #{modifytime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select id, templateId, sort, isAudition, storyName, storyDesc, storyIcon, storyTime, 
-    playCount, contentUrl
+    playCount, contentUrl, createtime, modifytime, status
     from story
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, templateId, sort, isAudition, storyName, storyDesc, storyIcon, storyTime, 
-    playCount, contentUrl
+    playCount, contentUrl, createtime, modifytime, status
     from story
   </select>
 </mapper>

@@ -5,6 +5,9 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="invitedUserId" property="inviteduserid" jdbcType="INTEGER" />
     <result column="beInvitedUserId" property="beinviteduserid" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="modifytime" property="modifytime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from share
@@ -14,22 +17,27 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into share (invitedUserId, beInvitedUserId)
-    values (#{inviteduserid,jdbcType=INTEGER}, #{beinviteduserid,jdbcType=INTEGER})
+    insert into share (invitedUserId, beInvitedUserId, createtime, 
+      modifytime, status)
+    values (#{inviteduserid,jdbcType=INTEGER}, #{beinviteduserid,jdbcType=INTEGER}, #{createtime,jdbcType=VARCHAR}, 
+      #{modifytime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.Share" >
     update share
     set invitedUserId = #{inviteduserid,jdbcType=INTEGER},
-      beInvitedUserId = #{beinviteduserid,jdbcType=INTEGER}
+      beInvitedUserId = #{beinviteduserid,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      modifytime = #{modifytime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, invitedUserId, beInvitedUserId
+    select id, invitedUserId, beInvitedUserId, createtime, modifytime, status
     from share
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, invitedUserId, beInvitedUserId
+    select id, invitedUserId, beInvitedUserId, createtime, modifytime, status
     from share
   </select>
 </mapper>

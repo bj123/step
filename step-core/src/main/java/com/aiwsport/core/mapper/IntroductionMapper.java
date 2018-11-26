@@ -8,5 +8,9 @@ public interface IntroductionMapper {
 
     int insert(Introduction record);
 
+    Introduction selectByPrimaryKey(Integer id);
+
     List<Introduction> selectAll();
+
+    int updateByPrimaryKey(Introduction record);
 }

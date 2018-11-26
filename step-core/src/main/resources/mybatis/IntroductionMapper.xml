@@ -3,6 +3,9 @@
 <mapper namespace="com.aiwsport.core.mapper.IntroductionMapper" >
   <resultMap id="BaseResultMap" type="com.aiwsport.core.entity.Introduction" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="modifytime" property="modifytime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from introduction
@@ -12,11 +15,25 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into introduction ()
-    values ()
+    insert into introduction (createtime, modifytime, status
+      )
+    values (#{createtime,jdbcType=VARCHAR}, #{modifytime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
+      )
   </insert>
+  <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.Introduction" >
+    update introduction
+    set createtime = #{createtime,jdbcType=VARCHAR},
+      modifytime = #{modifytime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, createtime, modifytime, status
+    from introduction
+    where id = #{id,jdbcType=INTEGER}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id
+    select id, createtime, modifytime, status
     from introduction
   </select>
 </mapper>
