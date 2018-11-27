@@ -7,6 +7,12 @@ public class Template {
 
     private String templatename;
 
+    private String templatedesc;
+
+    private Integer chaptercount;
+
+    private Integer chaptercountnow;
+
     private String templateurl;
 
     private String isfree;
@@ -109,5 +115,29 @@ public class Template {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getTemplatedesc() {
+        return templatedesc;
+    }
+
+    public void setTemplatedesc(String templatedesc) {
+        this.templatedesc = templatedesc;
+    }
+
+    public Integer getChaptercount() {
+        return chaptercount;
+    }
+
+    public void setChaptercount(Integer chaptercount) {
+        this.chaptercount = chaptercount;
+    }
+
+    public Integer getChaptercountnow() {
+        return chaptercountnow;
+    }
+
+    public void setChaptercountnow(Integer chaptercountnow) {
+        this.chaptercountnow = chaptercountnow;
     }
 }

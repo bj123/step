@@ -1,9 +1,10 @@
 package com.aiwsport.core.service;
 
+import com.aiwsport.core.entity.Template;
 import com.aiwsport.core.entity.User;
+import com.aiwsport.core.mapper.TemplateMapper;
 import com.aiwsport.core.mapper.UserMapper;
 import com.aiwsport.core.utils.CommonUtil;
-import com.aiwsport.core.utils.DataTypeUtils;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,6 +23,9 @@ public class StoryService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private TemplateMapper templateMapper;
 
     private static Logger logger = LogManager.getLogger();
 
@@ -57,6 +61,12 @@ public class StoryService {
             userMapper.updateByPrimaryKey(user);
         }
         return user;
+    }
+
+    public List<Template> getTemplateByShowModuleType(String showModuleType){
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("showModuleType", showModuleType);
+        return templateMapper.search(param);
     }
 
 }

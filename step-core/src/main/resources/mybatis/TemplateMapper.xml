@@ -5,6 +5,11 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="introductionId" property="introductionid" jdbcType="INTEGER" />
     <result column="templateName" property="templatename" jdbcType="VARCHAR" />
+
+    <result column="templateDesc" property="templatedesc" jdbcType="VARCHAR" />
+    <result column="chapterCount" property="chaptercount" jdbcType="INTEGER" />
+    <result column="chapterCountNow" property="chaptercountnow" jdbcType="INTEGER" />
+
     <result column="templateUrl" property="templateurl" jdbcType="VARCHAR" />
     <result column="isFree" property="isfree" jdbcType="VARCHAR" />
     <result column="showModuleType" property="showmoduletype" jdbcType="VARCHAR" />
@@ -22,11 +27,13 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into template (introductionId, templateName, templateUrl, 
+    insert into template (introductionId, templateName, templateDesc, chapterCount, chapterCountNow, templateUrl,
       isFree, showModuleType, type, 
       salePrice, modifytime, createtime, 
       status)
-    values (#{introductionid,jdbcType=INTEGER}, #{templatename,jdbcType=VARCHAR}, #{templateurl,jdbcType=VARCHAR}, 
+    values (#{introductionid,jdbcType=INTEGER}, #{templatename,jdbcType=VARCHAR},
+      #{templatedesc,jdbcType=VARCHAR}, #{chaptercount,jdbcType=INTEGER},
+      #{chaptercountnow,jdbcType=INTEGER}, #{templateurl,jdbcType=VARCHAR},
       #{isfree,jdbcType=VARCHAR}, #{showmoduletype,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{saleprice,jdbcType=DOUBLE}, #{modifytime,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, 
       #{status,jdbcType=VARCHAR})
@@ -35,6 +42,9 @@
     update template
     set introductionId = #{introductionid,jdbcType=INTEGER},
       templateName = #{templatename,jdbcType=VARCHAR},
+      templateDesc = #{templatedesc,jdbcType=VARCHAR},
+      chapterCount = #{chaptercount,jdbcType=INTEGER},
+      chapterCountNow = #{chaptercountnow,jdbcType=INTEGER},
       templateUrl = #{templateurl,jdbcType=VARCHAR},
       isFree = #{isfree,jdbcType=VARCHAR},
       showModuleType = #{showmoduletype,jdbcType=VARCHAR},
@@ -46,18 +56,18 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, introductionId, templateName, templateUrl, isFree, showModuleType, type, 
+    select id, introductionId, templateName, templateDesc, chapterCount, chapterCountNow, templateUrl, isFree, showModuleType, type,
     salePrice, modifytime, createtime, status
     from template
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, introductionId, templateName, templateUrl, isFree, showModuleType, type, 
+    select id, introductionId, templateName, templateDesc, chapterCount, chapterCountNow, templateUrl, isFree, showModuleType, type,
     salePrice, modifytime, createtime, status
     from template
   </select>
   <select id="search" resultMap="BaseResultMap" parameterType="Map">
-    select id, introductionId, templateName, templateUrl, isFree, showModuleType, type,
+    select id, introductionId, templateName, templateDesc, chapterCount, chapterCountNow, templateUrl, isFree, showModuleType, type,
     salePrice, modifytime, createtime, status from template
     <where>
       1 = 1

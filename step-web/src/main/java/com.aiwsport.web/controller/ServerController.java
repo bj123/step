@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,7 +64,10 @@ public class ServerController {
 
             List<Template> banners = storyService.getTemplateByShowModuleType("4");
             initObj.setBanners(banners);
-
+            List<Template> todayList = storyService.getTemplateByShowModuleType("1");
+            initObj.setToday_list(todayList);
+            List<Template> parentingList = storyService.getTemplateByShowModuleType("2");
+            initObj.setParenting_list(parentingList);
 
         } catch (Exception e) {
             logger.error("onlogin is error " + e.getMessage(), e);
