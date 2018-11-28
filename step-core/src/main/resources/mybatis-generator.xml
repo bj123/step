@@ -27,7 +27,7 @@
         <javaClientGenerator targetPackage="com.aiwsport.core.mapper" targetProject="src/main/java" type="XMLMAPPER">
         </javaClientGenerator>
 
-        <table tableName="%">
+        <table tableName="show_config">
             <!--mysql 配置-->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
             <!--oracle 配置-->
