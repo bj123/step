@@ -61,13 +61,14 @@ public class ServerController {
         try {
             user = storyService.login(openid, province, avatarUrl, nickName, country, city, gender);
 
-
             List<Template> banners = storyService.getTemplateByShowModuleType("4");
             initObj.setBanners(banners);
             List<Template> todayList = storyService.getTemplateByShowModuleType("1");
             initObj.setToday_list(todayList);
             List<Template> parentingList = storyService.getTemplateByShowModuleType("2");
             initObj.setParenting_list(parentingList);
+            List<Template> recommendList = storyService.getTemplateByShowModuleType("3");
+            initObj.setRecommend_list(recommendList);
 
         } catch (Exception e) {
             logger.error("onlogin is error " + e.getMessage(), e);

@@ -16,6 +16,8 @@ public class InitObj {
 
     List<Template> parenting_list;
 
+    List<Template> recommend_list;
+
 
     public List<Template> getBanners() {
         return banners;
@@ -39,5 +41,13 @@ public class InitObj {
 
     public void setParenting_list(List<Template> parenting_list) {
         this.parenting_list = parenting_list;
+    }
+
+    public List<Template> getRecommend_list() {
+        return recommend_list;
+    }
+
+    public void setRecommend_list(List<Template> recommend_list) {
+        this.recommend_list = recommend_list;
     }
 }
