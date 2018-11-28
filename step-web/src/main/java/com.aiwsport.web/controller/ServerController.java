@@ -54,7 +54,7 @@ public class ServerController {
         return new ResultMsg("decryptOK", userInfoObj);
     }
 
-    @RequestMapping(value = "/step/onlogin.json")
+    @RequestMapping(value = "/stroy/onlogin.json")
     public ResultMsg onlogin(String openid, String province,
                               String avatarUrl, String nickName, String country, String city, String gender) {
         User user = null;
@@ -84,7 +84,7 @@ public class ServerController {
     }
 
 
-    @RequestMapping(value = "/step/getCourse.json")
+    @RequestMapping(value = "/stroy/getCourse.json")
     public ResultMsg getCourse() {
         CourseObj courseObj = new CourseObj();
         try {
