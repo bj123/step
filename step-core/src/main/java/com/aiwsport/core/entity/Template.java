@@ -23,6 +23,8 @@ public class Template {
 
     private Double saleprice;
 
+    private Integer subcount;
+
     private String modifytime;
 
     private String createtime;
@@ -139,5 +141,13 @@ public class Template {
 
     public void setChaptercountnow(Integer chaptercountnow) {
         this.chaptercountnow = chaptercountnow;
+    }
+
+    public Integer getSubcount() {
+        return subcount;
+    }
+
+    public void setSubcount(Integer subcount) {
+        this.subcount = subcount;
     }
 }

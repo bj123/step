@@ -32,7 +32,7 @@ public class ServerController {
 
     private static Logger logger = LogManager.getLogger();
 
-    @RequestMapping("/stroy/decrypt.json")
+    @RequestMapping("/story/decrypt.json")
     public ResultMsg decrypt(String code, String encryptdata, String iv) throws Exception{
         JSONObject userInfoObj = null;
         try {
@@ -54,7 +54,7 @@ public class ServerController {
         return new ResultMsg("decryptOK", userInfoObj);
     }
 
-    @RequestMapping(value = "/stroy/onlogin.json")
+    @RequestMapping(value = "/story/onlogin.json")
     public ResultMsg onlogin(String openid, String province,
                               String avatarUrl, String nickName, String country, String city, String gender) {
         User user = null;
@@ -84,7 +84,7 @@ public class ServerController {
     }
 
 
-    @RequestMapping(value = "/stroy/getCourse.json")
+    @RequestMapping(value = "/story/getCourse.json")
     public ResultMsg getCourse() {
         CourseObj courseObj = new CourseObj();
         try {

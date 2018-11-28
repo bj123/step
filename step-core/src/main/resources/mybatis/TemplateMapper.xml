@@ -15,6 +15,7 @@
     <result column="showModuleType" property="showmoduletype" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="salePrice" property="saleprice" jdbcType="DOUBLE" />
+    <result column="subCount" property="subcount" jdbcType="INTEGER" />
     <result column="modifytime" property="modifytime" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
@@ -29,13 +30,13 @@
     </selectKey>
     insert into template (introductionId, templateName, templateDesc, chapterCount, chapterCountNow, templateUrl,
       isFree, showModuleType, type, 
-      salePrice, modifytime, createtime, 
+      salePrice, subCount, modifytime, createtime,
       status)
     values (#{introductionid,jdbcType=INTEGER}, #{templatename,jdbcType=VARCHAR},
       #{templatedesc,jdbcType=VARCHAR}, #{chaptercount,jdbcType=INTEGER},
       #{chaptercountnow,jdbcType=INTEGER}, #{templateurl,jdbcType=VARCHAR},
       #{isfree,jdbcType=VARCHAR}, #{showmoduletype,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{saleprice,jdbcType=DOUBLE}, #{modifytime,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, 
+      #{saleprice,jdbcType=DOUBLE}, #{subcount,jdbcType=INTEGER}, #{modifytime,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR},
       #{status,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.Template" >
@@ -50,6 +51,7 @@
       showModuleType = #{showmoduletype,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
       salePrice = #{saleprice,jdbcType=DOUBLE},
+      subCount = #{subcount,jdbcType=INTEGER},
       modifytime = #{modifytime,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR}
@@ -57,18 +59,18 @@
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select id, introductionId, templateName, templateDesc, chapterCount, chapterCountNow, templateUrl, isFree, showModuleType, type,
-    salePrice, modifytime, createtime, status
+    salePrice, subCount, modifytime, createtime, status
     from template
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, introductionId, templateName, templateDesc, chapterCount, chapterCountNow, templateUrl, isFree, showModuleType, type,
-    salePrice, modifytime, createtime, status
+    salePrice, subCount, modifytime, createtime, status
     from template
   </select>
   <select id="search" resultMap="BaseResultMap" parameterType="Map">
     select id, introductionId, templateName, templateDesc, chapterCount, chapterCountNow, templateUrl, isFree, showModuleType, type,
-    salePrice, modifytime, createtime, status from template
+    salePrice, subCount, modifytime, createtime, status from template
     <where>
       1 = 1
      <if test="showModuleType!=null">
