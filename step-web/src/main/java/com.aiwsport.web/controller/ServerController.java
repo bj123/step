@@ -4,6 +4,7 @@ import com.aiwsport.core.constant.ResultMsg;
 import com.aiwsport.core.entity.Template;
 import com.aiwsport.core.entity.User;
 import com.aiwsport.core.service.StoryService;
+import com.aiwsport.core.showmodel.CourseObj;
 import com.aiwsport.core.showmodel.InitObj;
 import com.aiwsport.web.utlis.ParseUrl;
 import com.alibaba.fastjson.JSONObject;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -81,6 +83,33 @@ public class ServerController {
         return new ResultMsg("onloginOK", initObj);
     }
 
+
+    @RequestMapping(value = "/step/getCourse.json")
+    public ResultMsg getCourse() {
+        CourseObj courseObj = new CourseObj();
+        try {
+            List<Template> banners = storyService.getTemplateByShowModuleType("5");
+            List<Template> all = storyService.getTemplateByShowModuleType("6");
+            List<Template> news = new ArrayList<Template>();
+
+            int count = 2;
+            if (all.size() < 2) {
+                count = all.size();
+            }
+            for (int i=0; i<count; i++) {
+                news.add(all.get(i));
+            }
+
+            courseObj.setBanners(banners);
+            courseObj.setAll(all);
+            courseObj.setNews(news);
+        } catch (Exception e) {
+            logger.error("getCourse is error " + e.getMessage(), e);
+            return new ResultMsg(false, 403, "获取课程失败");
+        }
+
+        return new ResultMsg("getCourseOK", courseObj);
+    }
 
 
     @RequestMapping("/test.json")
