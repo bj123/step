@@ -50,6 +50,7 @@ public class StoryService {
             user.setProvince(province);
             user.setLikeid("");
             user.setBuytemplateid("");
+            CommonUtil.buildBaseInfo(user);
             userMapper.insert(user);
         } else {
             if (!avatarUrl.equals(user.getAvatarurl())) {

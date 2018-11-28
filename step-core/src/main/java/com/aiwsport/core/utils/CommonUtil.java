@@ -26,10 +26,9 @@ public class CommonUtil {
      */
     public static void buildBaseInfo(Object obj) {
         try {
-            MethodUtils.invokeMethod(obj, "setOpId", 9276L);
-            MethodUtils.invokeMethod(obj, "setOpName", "admin");
-            MethodUtils.invokeMethod(obj, "setVaildState", stepConstant.ValidState.YES);
-            MethodUtils.invokeMethod(obj, "setModifyTime", DataTypeUtils.formatCurDateTime());
+            MethodUtils.invokeMethod(obj, "setCreatetime", DataTypeUtils.formatCurDateTime());
+            MethodUtils.invokeMethod(obj, "setStatus", stepConstant.ValidState.YES);
+            MethodUtils.invokeMethod(obj, "setModifytime", DataTypeUtils.formatCurDateTime());
         } catch (NoSuchMethodException e) {
             logger.warn("build baseinfo method is not exist");
         } catch (Exception e) {

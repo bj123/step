@@ -35,8 +35,8 @@ public interface stepConstant {
 	 * 状态,1-有效,2-无效
 	 */
 	public interface ValidState{
-		public static final int YES = 1;//1-有效,0-无效
-		public static final int NO =0;//1-有效,0-无效
+		public static final String YES = "1";//1-有效,0-无效
+		public static final String NO = "0";//1-有效,0-无效
 	}
 
 }
