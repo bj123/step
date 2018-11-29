@@ -4,6 +4,7 @@ import com.aiwsport.core.constant.ResultMsg;
 import com.aiwsport.core.entity.Template;
 import com.aiwsport.core.entity.User;
 import com.aiwsport.core.service.StoryService;
+import com.aiwsport.core.service.SysInfoService;
 import com.aiwsport.core.showmodel.CourseObj;
 import com.aiwsport.core.showmodel.InitObj;
 import com.aiwsport.web.utlis.ParseUrl;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 服务操作
@@ -27,6 +29,10 @@ public class ServerController {
 
     @Autowired
     private StoryService storyService;
+
+    @Autowired
+    private SysInfoService sysInfoService;
+
     private static final String URL1 = "https://api.weixin.qq.com/sns/jscode2session?appid=wx2a3f4b2e7fe9c09b&secret=3a499d875c3b6cabecf1f8f6e9608f92&js_code=";
     private static final String URL2 = "&grant_type=authorization_code";
 
@@ -114,6 +120,7 @@ public class ServerController {
 
     @RequestMapping("/test.json")
     public ResultMsg test() throws Exception{
+        ConcurrentMap<String, String> aa = sysInfoService.getStoryConfig();
         return new ResultMsg("服务启动成功", 9276);
     }
 

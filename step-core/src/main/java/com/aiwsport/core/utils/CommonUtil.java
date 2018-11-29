@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.security.InvalidAlgorithmParameterException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 公用工具类
@@ -15,8 +17,9 @@ import java.security.InvalidAlgorithmParameterException;
  * @author yangjian9
  */
 public class CommonUtil {
-
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(CommonUtil.class);
+
+    public static ConcurrentMap<String, String> storyConfig = new ConcurrentHashMap<String, String>();
 
     /**
      * 构建实体基础属性

@@ -29,7 +29,6 @@ public class StoryService {
 
     private static Logger logger = LogManager.getLogger();
 
-
     public JSONObject decrypt(String encryptedData, String iv, String sessionKey){
         return CommonUtil.decrypt(encryptedData, iv, sessionKey);
     }
