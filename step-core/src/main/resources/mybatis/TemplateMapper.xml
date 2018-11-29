@@ -83,8 +83,8 @@
        and type=#{type}
      </if>
        order by createtime desc
-      <if test="limit != null">
-        limit ${limit}
+      <if test="limitS != null and limitE != null">
+        limit ${limitS}, ${limitE}
       </if>
     </where>
   </select>

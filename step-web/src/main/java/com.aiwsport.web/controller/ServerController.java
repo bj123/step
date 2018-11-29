@@ -7,6 +7,7 @@ import com.aiwsport.core.service.StoryService;
 import com.aiwsport.core.service.SysInfoService;
 import com.aiwsport.core.showmodel.CourseObj;
 import com.aiwsport.core.showmodel.InitObj;
+import com.aiwsport.core.utils.CommonUtil;
 import com.aiwsport.web.utlis.ParseUrl;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.logging.log4j.LogManager;
@@ -75,7 +76,7 @@ public class ServerController {
             initObj.setToday_list(todayList);
             List<Template> parentingList = storyService.getTemplateByShowModuleType("2");
             initObj.setParenting_list(parentingList);
-            List<Template> recommendList = storyService.getTemplateByShowModuleTypeLimit("3");
+            List<Template> recommendList = storyService.getTemplateByShowModuleTypeByPage("3", "1", CommonUtil.storyConfig.get("CHOICE_LIST_LIMIT"));
             initObj.setRecommend_list(recommendList);
 
             initObj.setShowConfig(sysInfoService.getStoryConfig());
