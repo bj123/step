@@ -14,6 +14,9 @@
     <result column="coinNum" property="coinnum" jdbcType="DOUBLE" />
     <result column="buyTemplateId" property="buytemplateid" jdbcType="VARCHAR" />
     <result column="likeId" property="likeid" jdbcType="VARCHAR" />
+    <result column="childBirthday" property="childbirthday" jdbcType="VARCHAR" />
+    <result column="childName" property="childname" jdbcType="VARCHAR" />
+    <result column="childSex" property="childsex" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="VARCHAR" />
     <result column="modifytime" property="modifytime" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
@@ -26,16 +29,18 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user (openId, nickName, avatarUrl, 
-      gender, city, province, 
-      country, language, coinNum, 
-      buyTemplateId, likeId, createtime, 
-      modifytime, status)
-    values (#{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR}, 
-      #{gender,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
-      #{country,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{coinnum,jdbcType=DOUBLE}, 
-      #{buytemplateid,jdbcType=VARCHAR}, #{likeid,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, 
-      #{modifytime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
+    insert into user (openId, nickName, avatarUrl,
+    gender, city, province,
+    country, language, coinNum,
+    buyTemplateId, likeId, childBirthday,
+    childName, childSex, createtime,
+    modifytime, status)
+    values (#{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR},
+    #{gender,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
+    #{country,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{coinnum,jdbcType=DOUBLE},
+    #{buytemplateid,jdbcType=VARCHAR}, #{likeid,jdbcType=VARCHAR}, #{childbirthday,jdbcType=VARCHAR},
+    #{childname,jdbcType=VARCHAR}, #{childsex,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR},
+    #{modifytime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.User" >
     update user
@@ -50,6 +55,9 @@
       coinNum = #{coinnum,jdbcType=DOUBLE},
       buyTemplateId = #{buytemplateid,jdbcType=VARCHAR},
       likeId = #{likeid,jdbcType=VARCHAR},
+      childBirthday = #{childbirthday,jdbcType=VARCHAR},
+      childName = #{childname,jdbcType=VARCHAR},
+      childSex = #{childsex,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=VARCHAR},
       modifytime = #{modifytime,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR}
@@ -57,18 +65,21 @@
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select id, openId, nickName, avatarUrl, gender, city, province, country, language, 
-    coinNum, buyTemplateId, likeId, createtime, modifytime, status
+    coinNum, buyTemplateId, likeId, childBirthday, childName, childSex, createtime, modifytime,
+    status
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, openId, nickName, avatarUrl, gender, city, province, country, language, 
-    coinNum, buyTemplateId, likeId, createtime, modifytime, status
+    coinNum, buyTemplateId, likeId, childBirthday, childName, childSex, createtime, modifytime,
+    status
     from user
   </select>
   <select id="getByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select id, openId, coinNum, nickName, avatarUrl, gender, city, province, country,
-    language
+    select id, openId, nickName, avatarUrl, gender, city, province, country, language,
+    coinNum, buyTemplateId, likeId, childBirthday, childName, childSex, createtime, modifytime,
+    status
     from user
     where openId = #{openId,jdbcType=INTEGER}
   </select>

@@ -82,7 +82,10 @@
      <if test="type != null">
        and type=#{type}
      </if>
-       order by createtime desc;
+       order by createtime desc
+      <if test="limit != null">
+        limit ${limit}
+      </if>
     </where>
   </select>
 </mapper>

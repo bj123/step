@@ -1,6 +1,7 @@
 package com.aiwsport.core.showmodel;
 
 import com.aiwsport.core.entity.Template;
+import com.aiwsport.core.entity.User;
 
 
 import java.util.List;
@@ -20,6 +21,8 @@ public class InitObj {
     List<Template> recommend_list;
 
     Map<String, String> showConfig;
+
+    User user;
 
 
     public List<Template> getBanners() {
@@ -60,5 +63,13 @@ public class InitObj {
 
     public void setShowConfig(Map<String, String> showConfig) {
         this.showConfig = showConfig;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

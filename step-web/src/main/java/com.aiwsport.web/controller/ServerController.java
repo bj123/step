@@ -68,14 +68,16 @@ public class ServerController {
 
         try {
             user = storyService.login(openid, province, avatarUrl, nickName, country, city, gender);
+            initObj.setUser(user);
             List<Template> banners = storyService.getTemplateByShowModuleType("4");
             initObj.setBanners(banners);
             List<Template> todayList = storyService.getTemplateByShowModuleType("1");
             initObj.setToday_list(todayList);
             List<Template> parentingList = storyService.getTemplateByShowModuleType("2");
             initObj.setParenting_list(parentingList);
-            List<Template> recommendList = storyService.getTemplateByShowModuleType("3");
+            List<Template> recommendList = storyService.getTemplateByShowModuleTypeLimit("3");
             initObj.setRecommend_list(recommendList);
+
             initObj.setShowConfig(sysInfoService.getStoryConfig());
         } catch (Exception e) {
             logger.error("onlogin is error " + e.getMessage(), e);
@@ -88,6 +90,21 @@ public class ServerController {
         return new ResultMsg("onloginOK", initObj);
     }
 
+    @RequestMapping(value = "/story/updateChildInfo.json")
+    public ResultMsg updateChildInfo(Integer userId, String name, String sex, String brithday) {
+        try {
+            ResultMsg resultMsg = storyService.updateChildInfo(userId, name, sex, brithday);
+            if (resultMsg.getCode() != 200) {
+                logger.error("updateChildInfo is error");
+                return new ResultMsg(false, 403, "更新失败");
+            }
+        } catch (Exception e) {
+            logger.error("updateChildInfo is error " + e.getMessage(), e);
+            return new ResultMsg(false, 403, "更新失败");
+        }
+
+        return new ResultMsg("updateChildInfoOK", true);
+    }
 
     @RequestMapping(value = "/story/getCourse.json")
     public ResultMsg getCourse() {
@@ -116,10 +133,14 @@ public class ServerController {
         return new ResultMsg("getCourseOK", courseObj);
     }
 
+    @RequestMapping(value = "/story/getUserInfo.json")
+    public ResultMsg getUserInfo(Integer userId) {
+        return new ResultMsg("getCourseOK", storyService.getUserInfo(userId));
+    }
+
 
     @RequestMapping("/test.json")
     public ResultMsg test() throws Exception{
-        ConcurrentMap<String, String> aa = sysInfoService.getStoryConfig();
         return new ResultMsg("服务启动成功", 9276);
     }
 

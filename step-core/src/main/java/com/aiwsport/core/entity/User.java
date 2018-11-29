@@ -25,6 +25,12 @@ public class User {
 
     private String likeid;
 
+    private String childbirthday;
+
+    private String childname;
+
+    private String childsex;
+
     private String createtime;
 
     private String modifytime;
@@ -125,6 +131,30 @@ public class User {
 
     public void setLikeid(String likeid) {
         this.likeid = likeid;
+    }
+
+    public String getChildbirthday() {
+        return childbirthday;
+    }
+
+    public void setChildbirthday(String childbirthday) {
+        this.childbirthday = childbirthday;
+    }
+
+    public String getChildname() {
+        return childname;
+    }
+
+    public void setChildname(String childname) {
+        this.childname = childname;
+    }
+
+    public String getChildsex() {
+        return childsex;
+    }
+
+    public void setChildsex(String childsex) {
+        this.childsex = childsex;
     }
 
     public String getCreatetime() {

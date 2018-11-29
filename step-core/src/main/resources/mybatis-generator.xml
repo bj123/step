@@ -20,14 +20,14 @@
                         password="yangjian9276">
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.aiwsport.core.entity" targetProject="src/main/java" />
+        <javaModelGenerator targetPackage="com.aiwsport.core" targetProject="src/main/java" />
 
-        <sqlMapGenerator targetPackage="mybatis" targetProject="src/main/resources"/>
+        <sqlMapGenerator targetPackage="com.aiwsport.core" targetProject="src/main/java"/>
 
-        <javaClientGenerator targetPackage="com.aiwsport.core.mapper" targetProject="src/main/java" type="XMLMAPPER">
+        <javaClientGenerator targetPackage="com.aiwsport.core" targetProject="src/main/java" type="XMLMAPPER">
         </javaClientGenerator>
 
-        <table tableName="show_config">
+        <table tableName="user">
             <!--mysql 配置-->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
             <!--oracle 配置-->
