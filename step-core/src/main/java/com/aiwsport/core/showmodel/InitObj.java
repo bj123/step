@@ -4,6 +4,7 @@ import com.aiwsport.core.entity.Template;
 
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yangjian9 on 2018/11/26.
@@ -17,6 +18,8 @@ public class InitObj {
     List<Template> parenting_list;
 
     List<Template> recommend_list;
+
+    Map<String, String> showConfig;
 
 
     public List<Template> getBanners() {
@@ -49,5 +52,13 @@ public class InitObj {
 
     public void setRecommend_list(List<Template> recommend_list) {
         this.recommend_list = recommend_list;
+    }
+
+    public Map<String, String> getShowConfig() {
+        return showConfig;
+    }
+
+    public void setShowConfig(Map<String, String> showConfig) {
+        this.showConfig = showConfig;
     }
 }

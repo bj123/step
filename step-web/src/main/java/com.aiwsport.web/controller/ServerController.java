@@ -68,7 +68,6 @@ public class ServerController {
 
         try {
             user = storyService.login(openid, province, avatarUrl, nickName, country, city, gender);
-
             List<Template> banners = storyService.getTemplateByShowModuleType("4");
             initObj.setBanners(banners);
             List<Template> todayList = storyService.getTemplateByShowModuleType("1");
@@ -77,7 +76,7 @@ public class ServerController {
             initObj.setParenting_list(parentingList);
             List<Template> recommendList = storyService.getTemplateByShowModuleType("3");
             initObj.setRecommend_list(recommendList);
-
+            initObj.setShowConfig(sysInfoService.getStoryConfig());
         } catch (Exception e) {
             logger.error("onlogin is error " + e.getMessage(), e);
             return new ResultMsg(false, 403, "登录失败");
