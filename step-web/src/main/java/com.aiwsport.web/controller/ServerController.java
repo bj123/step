@@ -76,7 +76,7 @@ public class ServerController {
             initObj.setToday_list(todayList);
             List<Template> parentingList = storyService.getTemplateByShowModuleType("2");
             initObj.setParenting_list(parentingList);
-            List<Template> recommendList = storyService.getTemplateByShowModuleTypeByPage("3", "1", CommonUtil.storyConfig.get("CHOICE_LIST_LIMIT"));
+            List<Template> recommendList = storyService.getTemplateByShowModuleTypeAndType("3", "1", CommonUtil.storyConfig.get("CHOICE_LIST_LIMIT"));
             initObj.setRecommend_list(recommendList);
 
             initObj.setShowConfig(sysInfoService.getStoryConfig());
@@ -139,6 +139,18 @@ public class ServerController {
         return new ResultMsg("getCourseOK", storyService.getUserInfo(userId));
     }
 
+    @RequestMapping(value = "/story/getTemplatelistByTypeAndPage.json")
+    public ResultMsg getTemplatelistByTypeAndPage(String templateType, String pid, String psize) {
+        List<Template> templates = null;
+        try {
+            templates = storyService.getTemplateByTypeAndPage(templateType, pid, psize);
+        } catch (Exception e) {
+            logger.error("getTemplatelistBypage is error " + e.getMessage(), e);
+            return new ResultMsg(false, 403, "获取模板列表失败");
+        }
+
+        return new ResultMsg("getTemplatelistBypageOK", templates);
+    }
 
     @RequestMapping("/test.json")
     public ResultMsg test() throws Exception{
