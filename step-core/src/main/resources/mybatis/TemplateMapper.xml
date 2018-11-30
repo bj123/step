@@ -80,7 +80,7 @@
        and templateName=#{templateName}
      </if>
      <if test="type != null">
-       and type=#{type}
+       and type in (${type})
      </if>
        order by createtime desc
       <if test="limitS != null and limitE != null">

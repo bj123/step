@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * 服务操作
@@ -150,6 +149,19 @@ public class ServerController {
         }
 
         return new ResultMsg("getTemplatelistBypageOK", templates);
+    }
+
+    @RequestMapping(value = "/story/getTemplatelistByShowModuleTypeAndPage.json")
+    public ResultMsg getTemplatelistByShowModuleTypeAndPage(String templateType, String pid, String psize) {
+        List<Template> templates = null;
+        try {
+            templates = storyService.getTemplateByShowModuleTypeAndType(templateType, pid, psize);
+        } catch (Exception e) {
+            logger.error("getTemplatelistBypage is error " + e.getMessage(), e);
+            return new ResultMsg(false, 403, "获取模板列表失败");
+        }
+
+        return new ResultMsg("getTemplatelistByShowModuleTypeAndPageOK", templates);
     }
 
     @RequestMapping("/test.json")
