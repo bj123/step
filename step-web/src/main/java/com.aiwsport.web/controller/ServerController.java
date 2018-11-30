@@ -3,7 +3,7 @@ package com.aiwsport.web.controller;
 import com.aiwsport.core.constant.ResultMsg;
 import com.aiwsport.core.entity.Template;
 import com.aiwsport.core.entity.User;
-import com.aiwsport.core.service.StoryService;
+import com.aiwsport.core.service.StorysService;
 import com.aiwsport.core.service.SysInfoService;
 import com.aiwsport.core.showmodel.CourseObj;
 import com.aiwsport.core.showmodel.InitObj;
@@ -28,7 +28,7 @@ import java.util.List;
 public class ServerController {
 
     @Autowired
-    private StoryService storyService;
+    private StorysService storysService;
 
     @Autowired
     private SysInfoService sysInfoService;
@@ -47,7 +47,7 @@ public class ServerController {
             logger.info("------resUser------" + resUser + " ------cost------" + (System.currentTimeMillis()-start));
             JSONObject userInfo = JSONObject.parseObject(resUser);
             String sessionKey = String.valueOf(userInfo.get("session_key"));
-            userInfoObj = storyService.decrypt(encryptdata, iv, sessionKey);
+            userInfoObj = storysService.decrypt(encryptdata, iv, sessionKey);
         } catch (Exception e) {
             logger.error("decrypt is error " + e.getMessage(), e);
             return new ResultMsg(false, 403, "解密数据用户信息失败");
@@ -67,15 +67,15 @@ public class ServerController {
         InitObj initObj = new InitObj();
 
         try {
-            user = storyService.login(openid, province, avatarUrl, nickName, country, city, gender);
+            user = storysService.login(openid, province, avatarUrl, nickName, country, city, gender);
             initObj.setUser(user);
-            List<Template> banners = storyService.getTemplateByShowModuleType("4");
+            List<Template> banners = storysService.getTemplateByShowModuleType("4");
             initObj.setBanners(banners);
-            List<Template> todayList = storyService.getTemplateByShowModuleType("1");
+            List<Template> todayList = storysService.getTemplateByShowModuleType("1");
             initObj.setToday_list(todayList);
-            List<Template> parentingList = storyService.getTemplateByShowModuleType("2");
+            List<Template> parentingList = storysService.getTemplateByShowModuleType("2");
             initObj.setParenting_list(parentingList);
-            List<Template> recommendList = storyService.getTemplateByShowModuleTypeAndType("3", "1", CommonUtil.storyConfig.get("CHOICE_LIST_LIMIT"));
+            List<Template> recommendList = storysService.getTemplateByShowModuleTypeAndType("3", "1", CommonUtil.storyConfig.get("CHOICE_LIST_LIMIT"));
             initObj.setRecommend_list(recommendList);
 
             initObj.setShowConfig(sysInfoService.getStoryConfig());
@@ -93,7 +93,7 @@ public class ServerController {
     @RequestMapping(value = "/story/updateChildInfo.json")
     public ResultMsg updateChildInfo(Integer userId, String name, String sex, String brithday) {
         try {
-            ResultMsg resultMsg = storyService.updateChildInfo(userId, name, sex, brithday);
+            ResultMsg resultMsg = storysService.updateChildInfo(userId, name, sex, brithday);
             if (resultMsg.getCode() != 200) {
                 logger.error("updateChildInfo is error");
                 return new ResultMsg(false, 403, "更新失败");
@@ -110,8 +110,8 @@ public class ServerController {
     public ResultMsg getCourse() {
         CourseObj courseObj = new CourseObj();
         try {
-            List<Template> banners = storyService.getTemplateByShowModuleType("5");
-            List<Template> all = storyService.getTemplateByShowModuleType("6");
+            List<Template> banners = storysService.getTemplateByShowModuleType("5");
+            List<Template> all = storysService.getTemplateByShowModuleType("6");
             List<Template> news = new ArrayList<Template>();
 
             int count = 2;
@@ -135,14 +135,14 @@ public class ServerController {
 
     @RequestMapping(value = "/story/getUserInfo.json")
     public ResultMsg getUserInfo(Integer userId) {
-        return new ResultMsg("getCourseOK", storyService.getUserInfo(userId));
+        return new ResultMsg("getCourseOK", storysService.getUserInfo(userId));
     }
 
     @RequestMapping(value = "/story/getTemplatelistByTypeAndPage.json")
     public ResultMsg getTemplatelistByTypeAndPage(String templateType, String pid, String psize) {
         List<Template> templates = null;
         try {
-            templates = storyService.getTemplateByTypeAndPage(templateType, pid, psize);
+            templates = storysService.getTemplateByTypeAndPage(templateType, pid, psize);
         } catch (Exception e) {
             logger.error("getTemplatelistBypage is error " + e.getMessage(), e);
             return new ResultMsg(false, 403, "获取模板列表失败");
@@ -155,7 +155,7 @@ public class ServerController {
     public ResultMsg getTemplatelistByShowModuleTypeAndPage(String templateType, String pid, String psize) {
         List<Template> templates = null;
         try {
-            templates = storyService.getTemplateByShowModuleTypeAndType(templateType, pid, psize);
+            templates = storysService.getTemplateByShowModuleTypeAndType(templateType, pid, psize);
         } catch (Exception e) {
             logger.error("getTemplatelistBypage is error " + e.getMessage(), e);
             return new ResultMsg(false, 403, "获取模板列表失败");

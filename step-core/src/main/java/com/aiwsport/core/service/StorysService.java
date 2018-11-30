@@ -1,5 +1,6 @@
 package com.aiwsport.core.service;
 
+import com.aiwsport.core.constant.ResultMsg;
 import com.aiwsport.core.entity.Template;
 import com.aiwsport.core.entity.User;
 import com.aiwsport.core.mapper.TemplateMapper;
@@ -19,7 +20,7 @@ import java.util.Map;
  * Created by yangjian9 on 2018/9/10.
  */
 @Service
-public class StoryService {
+public class StorysService {
 
     @Autowired
     private UserMapper userMapper;
@@ -67,6 +68,58 @@ public class StoryService {
         Map<String, String> param = new HashMap<String, String>();
         param.put("showModuleType", showModuleType);
         return templateMapper.search(param);
+    }
+
+    public List<Template> getTemplateByShowModuleTypeAndType(String showModuleType, String page, String pageSize){
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("showModuleType", showModuleType);
+        int limitS = (Integer.parseInt(page)-1) * Integer.parseInt(pageSize);
+        param.put("limitS", String.valueOf(limitS));
+        int limitE = Integer.parseInt(page) * Integer.parseInt(pageSize);
+        param.put("limitE", String.valueOf(limitE));
+        return templateMapper.search(param);
+    }
+
+
+    public List<Template> getTemplateByTypeAndPage(String templateType, String page, String pageSize){
+        Map<String, String> param = new HashMap<String, String>();
+
+        if ("100".equals(templateType)) { // 100 是全部
+            param.put("type", "1,2");
+        } else if ("200".equals(templateType)) { // 200 是最新
+            param.put("type", "1,2,3"); // 逻辑上排除微课
+        } else {
+            param.put("type", templateType);
+        }
+
+        int limitS = (Integer.parseInt(page)-1) * Integer.parseInt(pageSize);
+        param.put("limitS", String.valueOf(limitS));
+        int limitE = Integer.parseInt(page) * Integer.parseInt(pageSize);
+        param.put("limitE", String.valueOf(limitE));
+        return templateMapper.search(param);
+    }
+
+    public ResultMsg updateChildInfo(Integer userId, String name, String sex, String brithday){
+        User user = userMapper.selectByPrimaryKey(userId);
+        if (user == null) {
+            logger.error("updateChildInfo is error userId " + userId);
+            return new ResultMsg(false, 403, "用户不存在");
+        }
+
+        user.setChildname(name);
+        user.setChildsex(sex);
+        user.setChildbirthday(brithday);
+        int flag = userMapper.updateByPrimaryKey(user);
+        if (flag == 0) {
+            logger.error("updateChildInfo is error name:" + name + ",sex:" + sex + ",brithday:" + brithday);
+            return new ResultMsg(false, 403, "更新失败");
+        }
+
+        return new ResultMsg("updateChildInfo", true);
+    }
+
+    public User getUserInfo(Integer userId){
+        return userMapper.selectByPrimaryKey(userId);
     }
 
 }
