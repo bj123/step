@@ -21,6 +21,8 @@ public class User {
 
     private Double coinnum;
 
+    private Double rewardcoin;
+
     private String buytemplateid;
 
     private String likeid;
@@ -179,5 +181,13 @@ public class User {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Double getRewardcoin() {
+        return rewardcoin;
+    }
+
+    public void setRewardcoin(Double rewardcoin) {
+        this.rewardcoin = rewardcoin;
     }
 }

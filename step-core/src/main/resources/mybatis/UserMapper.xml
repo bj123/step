@@ -12,6 +12,7 @@
     <result column="country" property="country" jdbcType="VARCHAR" />
     <result column="language" property="language" jdbcType="VARCHAR" />
     <result column="coinNum" property="coinnum" jdbcType="DOUBLE" />
+    <result column="rewardCoin" property="rewardcoin" jdbcType="DOUBLE" />
     <result column="buyTemplateId" property="buytemplateid" jdbcType="VARCHAR" />
     <result column="likeId" property="likeid" jdbcType="VARCHAR" />
     <result column="childBirthday" property="childbirthday" jdbcType="VARCHAR" />
@@ -31,13 +32,13 @@
     </selectKey>
     insert into user (openId, nickName, avatarUrl,
     gender, city, province,
-    country, language, coinNum,
+    country, language, coinNum, rewardCoin,
     buyTemplateId, likeId, childBirthday,
     childName, childSex, createtime,
     modifytime, status)
     values (#{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR},
     #{gender,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
-    #{country,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{coinnum,jdbcType=DOUBLE},
+    #{country,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{coinnum,jdbcType=DOUBLE}, #{rewardcoin,jdbcType=DOUBLE},
     #{buytemplateid,jdbcType=VARCHAR}, #{likeid,jdbcType=VARCHAR}, #{childbirthday,jdbcType=VARCHAR},
     #{childname,jdbcType=VARCHAR}, #{childsex,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR},
     #{modifytime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
@@ -53,6 +54,7 @@
       country = #{country,jdbcType=VARCHAR},
       language = #{language,jdbcType=VARCHAR},
       coinNum = #{coinnum,jdbcType=DOUBLE},
+      rewardCoin = #{rewardcoin,jdbcType=DOUBLE},
       buyTemplateId = #{buytemplateid,jdbcType=VARCHAR},
       likeId = #{likeid,jdbcType=VARCHAR},
       childBirthday = #{childbirthday,jdbcType=VARCHAR},
@@ -65,20 +67,20 @@
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select id, openId, nickName, avatarUrl, gender, city, province, country, language, 
-    coinNum, buyTemplateId, likeId, childBirthday, childName, childSex, createtime, modifytime,
+    coinNum, rewardcoin, buyTemplateId, likeId, childBirthday, childName, childSex, createtime, modifytime,
     status
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, openId, nickName, avatarUrl, gender, city, province, country, language, 
-    coinNum, buyTemplateId, likeId, childBirthday, childName, childSex, createtime, modifytime,
+    coinNum, rewardcoin, buyTemplateId, likeId, childBirthday, childName, childSex, createtime, modifytime,
     status
     from user
   </select>
   <select id="getByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select id, openId, nickName, avatarUrl, gender, city, province, country, language,
-    coinNum, buyTemplateId, likeId, childBirthday, childName, childSex, createtime, modifytime,
+    coinNum, rewardcoin, buyTemplateId, likeId, childBirthday, childName, childSex, createtime, modifytime,
     status
     from user
     where openId = #{openId,jdbcType=INTEGER}
