@@ -1,8 +1,10 @@
 package com.aiwsport.core.service;
 
 import com.aiwsport.core.constant.ResultMsg;
+import com.aiwsport.core.entity.Share;
 import com.aiwsport.core.entity.Template;
 import com.aiwsport.core.entity.User;
+import com.aiwsport.core.mapper.ShareMapper;
 import com.aiwsport.core.mapper.TemplateMapper;
 import com.aiwsport.core.mapper.UserMapper;
 import com.aiwsport.core.utils.CommonUtil;
@@ -27,6 +29,9 @@ public class StorysService {
 
     @Autowired
     private TemplateMapper templateMapper;
+
+    @Autowired
+    private ShareMapper shareMapper;
 
     private static Logger logger = LogManager.getLogger();
 
@@ -117,6 +122,26 @@ public class StorysService {
 
         return new ResultMsg("updateChildInfo", true);
     }
+
+    public ResultMsg createShare(Integer invitedUserId, Integer beInvitedUserId){
+        Share share = shareMapper.getShareLink(invitedUserId, beInvitedUserId);
+        if (share != null) {
+            return new ResultMsg(false, 403, "已经邀请");
+        }
+
+        Share newShare = new Share();
+        newShare.setInviteduserid(invitedUserId);
+        newShare.setBeinviteduserid(beInvitedUserId);
+        CommonUtil.buildBaseInfo(newShare);
+        shareMapper.insert(newShare);
+        return new ResultMsg("createShareOk", newShare);
+    }
+
+    public List<Share> getShareByInvitedUserId(Integer invitedUserId){
+        List<Share> shareList = shareMapper.getShareByInvitedUserId(invitedUserId);
+        return shareList;
+    }
+
 
     public User getUserInfo(Integer userId){
         return userMapper.selectByPrimaryKey(userId);

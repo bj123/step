@@ -40,4 +40,16 @@
     select id, invitedUserId, beInvitedUserId, createtime, modifytime, status
     from share
   </select>
+  <select id="getShareLink" resultMap="BaseResultMap">
+    select id, invitedUserId, beInvitedUserId, createtime, modifytime, status
+    from share
+    where invitedUserId = #{arg0,jdbcType=INTEGER} AND beInvitedUserId = #{arg1,jdbcType=INTEGER}
+  </select>
+  <select id="getShareByInvitedUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, invitedUserId, beInvitedUserId, createtime, modifytime, status
+    from share
+    where invitedUserId = #{invitedUserId,jdbcType=INTEGER}
+  </select>
+
+
 </mapper>

@@ -13,4 +13,8 @@ public interface ShareMapper {
     List<Share> selectAll();
 
     int updateByPrimaryKey(Share record);
+
+    Share getShareLink(Integer invitedUserId, Integer beInvitedUserId);
+
+    List<Share> getShareByInvitedUserId(Integer invitedUserId);
 }

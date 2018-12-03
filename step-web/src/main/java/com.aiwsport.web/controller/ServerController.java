@@ -1,12 +1,14 @@
 package com.aiwsport.web.controller;
 
 import com.aiwsport.core.constant.ResultMsg;
+import com.aiwsport.core.entity.Share;
 import com.aiwsport.core.entity.Template;
 import com.aiwsport.core.entity.User;
 import com.aiwsport.core.service.StorysService;
 import com.aiwsport.core.service.SysInfoService;
 import com.aiwsport.core.showmodel.CourseObj;
 import com.aiwsport.core.showmodel.InitObj;
+import com.aiwsport.core.showmodel.ShareInfoObj;
 import com.aiwsport.core.utils.CommonUtil;
 import com.aiwsport.web.utlis.ParseUrl;
 import com.alibaba.fastjson.JSONObject;
@@ -162,6 +164,39 @@ public class ServerController {
         }
 
         return new ResultMsg("getTemplatelistByShowModuleTypeAndPageOK", templates);
+    }
+
+    @RequestMapping(value = "/story/createShare.json")
+    public ResultMsg createShare(Integer invitedUserId, Integer beInvitedUserId) {
+        try {
+            return storysService.createShare(invitedUserId, beInvitedUserId);
+        } catch (Exception e) {
+            logger.error("createShare is error " + e.getMessage(), e);
+            return new ResultMsg(false, 403, "创建邀请关系失败");
+        }
+    }
+
+    @RequestMapping(value = "/story/getShareInfo.json")
+    public ResultMsg getShareInfo(Integer userId) {
+        ShareInfoObj shareInfoObj = new ShareInfoObj();
+        try {
+            // 获取邀请的人集合
+            List<Share> shares = storysService.getShareByInvitedUserId(userId);
+            List<User> shareUserList = new ArrayList<User>();
+            for (Share share : shares) {
+                User user = storysService.getUserInfo(share.getBeinviteduserid());
+                shareUserList.add(user);
+            }
+            shareInfoObj.setShareList(shareUserList);
+
+            // 获取邀请获得的奖励金额
+            User user = storysService.getUserInfo(userId);
+            shareInfoObj.setMyUser(user);
+        } catch (Exception e) {
+            logger.error("getShareInfo is error " + e.getMessage(), e);
+            return new ResultMsg(false, 403, "获取邀请关系信息");
+        }
+        return new ResultMsg("getShareInfoOK", shareInfoObj);
     }
 
     @RequestMapping("/test.json")
