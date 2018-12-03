@@ -18,12 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -207,24 +201,6 @@ public class ServerController {
 
     @RequestMapping("/test.json")
     public ResultMsg test() throws Exception{
-        // 此方法仅适用于JdK1.6及以上版本
-        Desktop.getDesktop().browse(new URL("https://blog.csdn.net/xu_san_duo/article/details/78084582").toURI());
-        Robot robot = new Robot();
-        robot.delay(10000);
-        Dimension d = new Dimension(Toolkit.getDefaultToolkit().getScreenSize());
-        int width = (int) d.getWidth();
-        int height = (int) d.getHeight();
-        // 最大化浏览器
-        robot.keyRelease(KeyEvent.VK_F11);
-        robot.delay(2000);
-        Image image = robot.createScreenCapture(new Rectangle(0, 0, width,
-                height));
-        BufferedImage bi = new BufferedImage(width, height,
-                BufferedImage.TYPE_INT_RGB);
-        Graphics g = bi.createGraphics();
-        g.drawImage(image, 0, 0, width, height, null);
-        // 保存图片
-        ImageIO.write(bi, "jpg", new File("/home/vsftpd/test/google"+System.currentTimeMillis()+".jpg"));
         return new ResultMsg("服务启动成功", 9276);
     }
 
