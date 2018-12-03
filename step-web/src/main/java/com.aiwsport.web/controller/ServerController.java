@@ -177,11 +177,11 @@ public class ServerController {
     }
 
     @RequestMapping(value = "/story/getShareInfo.json")
-    public ResultMsg getShareInfo(Integer userId) {
+    public ResultMsg getShareInfo(Integer pid) {
         ShareInfoObj shareInfoObj = new ShareInfoObj();
         try {
             // 获取邀请的人集合
-            List<Share> shares = storysService.getShareByInvitedUserId(userId);
+            List<Share> shares = storysService.getShareByInvitedUserId(pid);
             List<User> shareUserList = new ArrayList<User>();
             for (Share share : shares) {
                 User user = storysService.getUserInfo(share.getBeinviteduserid());
@@ -190,8 +190,11 @@ public class ServerController {
             shareInfoObj.setShareList(shareUserList);
 
             // 获取邀请获得的奖励金额
-            User user = storysService.getUserInfo(userId);
+            User user = storysService.getUserInfo(pid);
             shareInfoObj.setMyUser(user);
+
+            String isShowfriendImg = sysInfoService.getStoryConfig().get("IS_SHOW_FRIEND_IMG");
+            shareInfoObj.setIsShowfriendImg(isShowfriendImg);
         } catch (Exception e) {
             logger.error("getShareInfo is error " + e.getMessage(), e);
             return new ResultMsg(false, 403, "获取邀请关系信息");

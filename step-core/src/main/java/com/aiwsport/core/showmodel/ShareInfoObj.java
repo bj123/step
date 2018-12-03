@@ -13,6 +13,8 @@ public class ShareInfoObj {
 
     private User myUser;
 
+    private String isShowfriendImg;
+
     public List<User> getShareList() {
         return shareList;
     }
@@ -27,5 +29,13 @@ public class ShareInfoObj {
 
     public void setMyUser(User myUser) {
         this.myUser = myUser;
+    }
+
+    public String getIsShowfriendImg() {
+        return isShowfriendImg;
+    }
+
+    public void setIsShowfriendImg(String isShowfriendImg) {
+        this.isShowfriendImg = isShowfriendImg;
     }
 }
