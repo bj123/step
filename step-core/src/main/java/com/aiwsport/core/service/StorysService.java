@@ -129,6 +129,11 @@ public class StorysService {
             return new ResultMsg(false, 403, "已经邀请");
         }
 
+        Share share1 = shareMapper.getShareLink(beInvitedUserId, invitedUserId);
+        if (share1 != null) {
+            return new ResultMsg(false, 403, "已经邀请");
+        }
+
         Share newShare = new Share();
         newShare.setInviteduserid(invitedUserId);
         newShare.setBeinviteduserid(beInvitedUserId);
