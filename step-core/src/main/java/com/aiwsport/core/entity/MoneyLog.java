@@ -9,6 +9,10 @@ public class MoneyLog {
 
     private Double cashback;
 
+    private String realname;
+
+    private Double withdraw;
+
     private Double monetary;
 
     private String type;
@@ -89,5 +93,21 @@ public class MoneyLog {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public Double getWithdraw() {
+        return withdraw;
+    }
+
+    public void setWithdraw(Double withdraw) {
+        this.withdraw = withdraw;
     }
 }

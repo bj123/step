@@ -206,6 +206,21 @@ public class ServerController {
         return new ResultMsg("getShareInfoOK", shareInfoObj);
     }
 
+    @RequestMapping(value = "/story/returnCash.json")
+    public ResultMsg returnCash(Integer userId, String real_name, double amount) {
+        if (amount < 30) {
+            return new ResultMsg(false, 403, "大于30元才能体现");
+        }
+
+        try {
+            return storysService.returnCash(userId, real_name, amount);
+        } catch (Exception e) {
+            return new ResultMsg(false, 403, "提现失败");
+        }
+    }
+
+
+
     @RequestMapping("/test.json")
     public ResultMsg test() throws Exception{
         return new ResultMsg("服务启动成功", 9276);

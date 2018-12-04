@@ -29,7 +29,6 @@ public class CommonUtil {
      */
     public static void buildBaseInfo(Object obj) {
         try {
-            MethodUtils.invokeMethod(obj, "setCreatetime", DataTypeUtils.formatCurDateTime());
             MethodUtils.invokeMethod(obj, "setStatus", stepConstant.ValidState.YES);
             MethodUtils.invokeMethod(obj, "setModifytime", DataTypeUtils.formatCurDateTime());
         } catch (NoSuchMethodException e) {
