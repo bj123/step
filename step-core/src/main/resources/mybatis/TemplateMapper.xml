@@ -73,13 +73,13 @@
     salePrice, subCount, modifytime, createtime, status from template
     <where>
       1 = 1
-     <if test="showModuleType!=null">
+     <if test="showModuleType!=null and templateName != ''">
       and showModuleType LIKE CONCAT('%',#{showModuleType},'%')
      </if>
-     <if test="templateName != null">
+     <if test="templateName != null and templateName != ''">
        and templateName=#{templateName}
      </if>
-     <if test="type != null">
+     <if test="type != null and type != ''">
        and type in (${type})
      </if>
        order by createtime desc
