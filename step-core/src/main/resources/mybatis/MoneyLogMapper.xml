@@ -4,9 +4,11 @@
   <resultMap id="BaseResultMap" type="com.aiwsport.core.entity.MoneyLog" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="realname" property="realName" jdbcType="VARCHAR" />
     <result column="balance" property="balance" jdbcType="DOUBLE" />
     <result column="cashback" property="cashback" jdbcType="DOUBLE" />
     <result column="monetary" property="monetary" jdbcType="DOUBLE" />
+    <result column="withdraw" property="withdraw" jdbcType="DOUBLE" />
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="VARCHAR" />
     <result column="modifytime" property="modifytime" jdbcType="VARCHAR" />
@@ -20,11 +22,11 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into money_log (userId, balance, cashback, 
-      monetary, type, createtime, 
+    insert into money_log (userId, balance, cashback,
+      monetary, withdraw, realName, type, createtime,
       modifytime, status)
     values (#{userid,jdbcType=INTEGER}, #{balance,jdbcType=DOUBLE}, #{cashback,jdbcType=DOUBLE}, 
-      #{monetary,jdbcType=DOUBLE}, #{type,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, 
+      #{monetary,jdbcType=DOUBLE}, #{withdraw,jdbcType=DOUBLE}, #{realname,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR},
       #{modifytime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.MoneyLog" >
@@ -33,6 +35,8 @@
       balance = #{balance,jdbcType=DOUBLE},
       cashback = #{cashback,jdbcType=DOUBLE},
       monetary = #{monetary,jdbcType=DOUBLE},
+      withdraw = #{withdraw,jdbcType=DOUBLE},
+      realName = #{realname,jdbcType=DOUBLE},
       type = #{type,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=VARCHAR},
       modifytime = #{modifytime,jdbcType=VARCHAR},
@@ -40,12 +44,12 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, userId, balance, cashback, monetary, type, createtime, modifytime, status
+    select id, userId, balance, cashback, monetary, withdraw, realname, type, createtime, modifytime, status
     from money_log
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, userId, balance, cashback, monetary, type, createtime, modifytime, status
+    select id, userId, balance, cashback, monetary, withdraw, realname, type, createtime, modifytime, status
     from money_log
   </select>
 </mapper>
