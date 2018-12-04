@@ -168,10 +168,14 @@ public class ServerController {
 
     @RequestMapping(value = "/story/createShare.json")
     public ResultMsg createShare(Integer invitedUserId, Integer beInvitedUserId) {
+        if (invitedUserId == beInvitedUserId) {
+            logger.warn("createShare is error invitedUserId:"+invitedUserId+", beInvitedUserId:"+beInvitedUserId);
+            return new ResultMsg(false, 403, "不能邀请自己");
+        }
         try {
             return storysService.createShare(invitedUserId, beInvitedUserId);
         } catch (Exception e) {
-            logger.error("createShare is error " + e.getMessage(), e);
+            logger.error("createShare is error invitedUserId:"+invitedUserId+", beInvitedUserId:"+beInvitedUserId+", errorInfo:" + e.getMessage(), e);
             return new ResultMsg(false, 403, "创建邀请关系失败");
         }
     }
