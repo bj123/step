@@ -13,4 +13,6 @@ public interface MoneyLogMapper {
     List<MoneyLog> selectAll();
 
     int updateByPrimaryKey(MoneyLog record);
+
+    List<MoneyLog> getMoneyLogByUserId(Integer userId);
 }

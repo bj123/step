@@ -163,7 +163,7 @@ public class StorysService {
         // 查询用户
         User user = userMapper.selectByPrimaryKey(userId);
         double rewardCoin = user.getRewardcoin();
-        if (amount < rewardCoin) {
+        if (amount > rewardCoin) {
             return new ResultMsg(false, 403, "余额不足");
         }
 
@@ -187,6 +187,7 @@ public class StorysService {
         moneyLog.setType("4");
         moneyLog.setWithdraw(amount);
         moneyLog.setRealname(real_name);
+        moneyLog.setCreatetime(DataTypeUtils.formatCurDateTime());
         CommonUtil.buildBaseInfo(moneyLog);
         int inRes = moneyLogMapper.insert(moneyLog);
         if (inRes < 1) {
@@ -195,10 +196,13 @@ public class StorysService {
         return new ResultMsg("returnCashOK", "");
     }
 
+    public List<MoneyLog> getMoneyLogs(Integer userId){
+        List<MoneyLog> moneyLogList = moneyLogMapper.getMoneyLogByUserId(userId);
+        return moneyLogList;
+    }
 
     public User getUserInfo(Integer userId){
         return userMapper.selectByPrimaryKey(userId);
     }
-
 
 }

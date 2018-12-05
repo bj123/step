@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.aiwsport.core.entity.MoneyLog" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="userId" property="userid" jdbcType="INTEGER" />
-    <result column="realname" property="realName" jdbcType="VARCHAR" />
+    <result column="realName" property="realname" jdbcType="VARCHAR" />
     <result column="balance" property="balance" jdbcType="DOUBLE" />
     <result column="cashback" property="cashback" jdbcType="DOUBLE" />
     <result column="monetary" property="monetary" jdbcType="DOUBLE" />
@@ -44,12 +44,18 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, userId, balance, cashback, monetary, withdraw, realname, type, createtime, modifytime, status
+    select id, userId, balance, cashback, monetary, withdraw, realName, type, createtime, modifytime, status
     from money_log
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, userId, balance, cashback, monetary, withdraw, realname, type, createtime, modifytime, status
+    select id, userId, balance, cashback, monetary, withdraw, realName, type, createtime, modifytime, status
     from money_log
   </select>
+  <select id="getMoneyLogByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, userId, balance, cashback, monetary, withdraw, realName, type, createtime, modifytime, status
+    from money_log
+    where userId = #{userId,jdbcType=INTEGER}
+  </select>
+
 </mapper>

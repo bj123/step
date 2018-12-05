@@ -1,6 +1,7 @@
 package com.aiwsport.web.controller;
 
 import com.aiwsport.core.constant.ResultMsg;
+import com.aiwsport.core.entity.MoneyLog;
 import com.aiwsport.core.entity.Share;
 import com.aiwsport.core.entity.Template;
 import com.aiwsport.core.entity.User;
@@ -219,7 +220,30 @@ public class ServerController {
         }
     }
 
+    @RequestMapping(value = "/story/getMoneyLogs.json")
+    public ResultMsg getMoneyLogs(Integer userId) {
+        try {
+            List<MoneyLog> moneyLogs = storysService.getMoneyLogs(userId);
+            for (MoneyLog moneyLog : moneyLogs) {
+                if ("1".equals(moneyLog.getType())) {
+                    moneyLog.setType("充值");
+                } else if ("2".equals(moneyLog.getType())) {
+                    moneyLog.setType("返现");
+                } else if ("3".equals(moneyLog.getType())) {
+                    moneyLog.setType("消费");
+                } else if ("4".equals(moneyLog.getType())) {
+                    moneyLog.setType("提现");
+                } else {
+                    moneyLog.setType("不明");
+                }
+            }
 
+            return new ResultMsg("getMoneyLogOK", moneyLogs);
+        } catch (Exception e) {
+            logger.error("getMoneyLogs is error userId:"+userId, e);
+            return new ResultMsg(false, 403, "获取余额明细失败");
+        }
+    }
 
     @RequestMapping("/test.json")
     public ResultMsg test() throws Exception{
