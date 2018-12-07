@@ -13,4 +13,6 @@ public interface IntroductionMapper {
     List<Introduction> selectAll();
 
     int updateByPrimaryKey(Introduction record);
+
+    List<Introduction> getIntroductionsByTemplateId(Integer templateId);
 }

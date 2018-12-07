@@ -1,14 +1,8 @@
 package com.aiwsport.core.service;
 
 import com.aiwsport.core.constant.ResultMsg;
-import com.aiwsport.core.entity.MoneyLog;
-import com.aiwsport.core.entity.Share;
-import com.aiwsport.core.entity.Template;
-import com.aiwsport.core.entity.User;
-import com.aiwsport.core.mapper.MoneyLogMapper;
-import com.aiwsport.core.mapper.ShareMapper;
-import com.aiwsport.core.mapper.TemplateMapper;
-import com.aiwsport.core.mapper.UserMapper;
+import com.aiwsport.core.entity.*;
+import com.aiwsport.core.mapper.*;
 import com.aiwsport.core.utils.CommonUtil;
 import com.aiwsport.core.utils.DataTypeUtils;
 import com.alibaba.fastjson.JSONObject;
@@ -39,6 +33,13 @@ public class StorysService {
 
     @Autowired
     private MoneyLogMapper moneyLogMapper;
+
+    @Autowired
+    private IntroductionMapper introductionMapper;
+
+    @Autowired
+    private StoryMapper storyMapper;
+
 
     private static Logger logger = LogManager.getLogger();
 
@@ -200,6 +201,19 @@ public class StorysService {
         List<MoneyLog> moneyLogList = moneyLogMapper.getMoneyLogByUserId(userId);
         return moneyLogList;
     }
+
+    public Template getTemplateById(Integer templateId){
+        return templateMapper.selectByPrimaryKey(templateId);
+    }
+
+    public List<Introduction> getIntroduction(Integer templateId){
+        return introductionMapper.getIntroductionsByTemplateId(templateId);
+    }
+
+    public List<Story> getStroysByTemplateId(Integer templateId){
+        return storyMapper.getStroysByTemplateId(templateId);
+    }
+
 
     public User getUserInfo(Integer userId){
         return userMapper.selectByPrimaryKey(userId);

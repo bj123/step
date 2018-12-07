@@ -6,6 +6,11 @@
     <result column="createtime" property="createtime" jdbcType="VARCHAR" />
     <result column="modifytime" property="modifytime" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="templateId" property="templateid" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="desction" property="desction" jdbcType="VARCHAR" />
+    <result column="imgUrl" property="imgurl" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from introduction
@@ -15,25 +20,39 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into introduction (createtime, modifytime, status
-      )
-    values (#{createtime,jdbcType=VARCHAR}, #{modifytime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
-      )
+    insert into introduction (createtime, modifytime, status,
+    sort, templateId, title,
+    desction, imgUrl)
+    values (#{createtime,jdbcType=VARCHAR}, #{modifytime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+    #{sort,jdbcType=INTEGER}, #{templateid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
+    #{desction,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.aiwsport.core.entity.Introduction" >
     update introduction
     set createtime = #{createtime,jdbcType=VARCHAR},
-      modifytime = #{modifytime,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR}
+    modifytime = #{modifytime,jdbcType=VARCHAR},
+    status = #{status,jdbcType=VARCHAR},
+    sort = #{sort,jdbcType=INTEGER},
+    templateId = #{templateid,jdbcType=INTEGER},
+    title = #{title,jdbcType=VARCHAR},
+    desction = #{desction,jdbcType=VARCHAR},
+    imgUrl = #{imgurl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, createtime, modifytime, status
+    select id, createtime, modifytime, status, sort, templateId, title, desction, imgUrl
     from introduction
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, createtime, modifytime, status
+    select id, createtime, modifytime, status, sort, templateId, title, desction, imgUrl
     from introduction
   </select>
+  <select id="getIntroductionsByTemplateId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, createtime, modifytime, status, sort, templateId, title, desction, imgUrl
+    from introduction
+    where templateId = #{templateId,jdbcType=INTEGER} order by sort
+  </select>
+
+
 </mapper>

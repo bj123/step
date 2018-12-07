@@ -13,4 +13,6 @@ public interface StoryMapper {
     List<Story> selectAll();
 
     int updateByPrimaryKey(Story record);
+
+    List<Story> getStroysByTemplateId(Integer templateId);
 }

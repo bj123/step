@@ -1,24 +1,24 @@
 package com.aiwsport.web.controller;
 
 import com.aiwsport.core.constant.ResultMsg;
-import com.aiwsport.core.entity.MoneyLog;
-import com.aiwsport.core.entity.Share;
-import com.aiwsport.core.entity.Template;
-import com.aiwsport.core.entity.User;
+import com.aiwsport.core.entity.*;
 import com.aiwsport.core.service.StorysService;
 import com.aiwsport.core.service.SysInfoService;
 import com.aiwsport.core.showmodel.CourseObj;
+import com.aiwsport.core.showmodel.DescObj;
 import com.aiwsport.core.showmodel.InitObj;
 import com.aiwsport.core.showmodel.ShareInfoObj;
 import com.aiwsport.core.utils.CommonUtil;
 import com.aiwsport.web.utlis.ParseUrl;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -222,8 +222,9 @@ public class ServerController {
 
     @RequestMapping(value = "/story/getMoneyLogs.json")
     public ResultMsg getMoneyLogs(Integer userId) {
+        List<MoneyLog> moneyLogs = null;
         try {
-            List<MoneyLog> moneyLogs = storysService.getMoneyLogs(userId);
+            moneyLogs = storysService.getMoneyLogs(userId);
             for (MoneyLog moneyLog : moneyLogs) {
                 if ("1".equals(moneyLog.getType())) {
                     moneyLog.setType("充值");
@@ -237,12 +238,44 @@ public class ServerController {
                     moneyLog.setType("不明");
                 }
             }
-
-            return new ResultMsg("getMoneyLogOK", moneyLogs);
         } catch (Exception e) {
             logger.error("getMoneyLogs is error userId:"+userId, e);
             return new ResultMsg(false, 403, "获取余额明细失败");
         }
+        return new ResultMsg("getMoneyLogOK", moneyLogs);
+    }
+
+    @RequestMapping(value = "/story/getTemplateDesc.json")
+    public ResultMsg getTemplateDesc(Integer templateId, Integer userId) {
+        DescObj descObj = new DescObj();
+        try {
+            Template template = storysService.getTemplateById(templateId);
+            descObj.setAlbum(template);
+            descObj.setShowConfig(sysInfoService.getStoryConfig());
+
+            List<Introduction> introductions = storysService.getIntroduction(templateId);
+            descObj.setIntroductions(introductions);
+
+            BigDecimal price = BigDecimal.valueOf(template.getSaleprice());
+            BigDecimal ss = BigDecimal.valueOf(0.1);
+            BigDecimal shareReward = price.multiply(ss);
+            descObj.setShareReward(shareReward.doubleValue()+"");
+
+            User user = storysService.getUserInfo(userId);
+            String buytemplateid = user.getBuytemplateid();
+            if (buytemplateid != null && StringUtils.isNotBlank(buytemplateid) && buytemplateid.contains(templateId+"")) {
+                descObj.setIs_buy(true);
+            } else {
+                descObj.setIs_buy(false);
+            }
+
+            List<Story> stories = storysService.getStroysByTemplateId(templateId);
+            descObj.setStories(stories);
+        } catch (Exception e) {
+            logger.error("getMoneyLogs is error userId:"+userId, e);
+            return new ResultMsg(false, 403, "获取余额明细失败");
+        }
+        return new ResultMsg("getTemplateDescOK", descObj);
     }
 
     @RequestMapping("/test.json")

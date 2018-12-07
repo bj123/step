@@ -62,4 +62,9 @@
     playCount, contentUrl, createtime, modifytime, status
     from story
   </select>
+  <select id="getStroysByTemplateId" resultMap="BaseResultMap" >
+    select id, templateId, sort, isAudition, storyName, storyDesc, storyIcon, storyTime,
+    playCount, contentUrl, createtime, modifytime, status
+    from story where templateId = #{templateId,jdbcType=INTEGER} order by sort
+  </select>
 </mapper>
