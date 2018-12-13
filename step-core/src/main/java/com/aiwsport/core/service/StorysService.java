@@ -160,6 +160,10 @@ public class StorysService {
         return shareList;
     }
 
+    public Story getPlayInfo(Map<String,Object> map){
+        return storyMapper.getPlayInfo(map);
+    }
+
     public ResultMsg returnCash(Integer userId, String real_name, double amount)throws Exception {
         // 查询用户
         User user = userMapper.selectByPrimaryKey(userId);

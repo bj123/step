@@ -67,4 +67,7 @@
     playCount, contentUrl, createtime, modifytime, status
     from story where templateId = #{templateId,jdbcType=INTEGER} order by sort
   </select>
+  <select id="getPlayInfo" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select * from story where id=#{id} and isAudition=#{isaudition}
+  </select>
 </mapper>
