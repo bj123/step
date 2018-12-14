@@ -20,7 +20,7 @@ public class DescObj {
 
     private List<Introduction> introductions;
 
-    private boolean is_buy;
+    private String isbuy;
 
     private List<Story> stories;
 
@@ -57,12 +57,12 @@ public class DescObj {
         this.introductions = introductions;
     }
 
-    public boolean is_buy() {
-        return is_buy;
+    public String getIsbuy() {
+        return isbuy;
     }
 
-    public void setIs_buy(boolean is_buy) {
-        this.is_buy = is_buy;
+    public void setIsbuy(String isbuy) {
+        this.isbuy = isbuy;
     }
 
     public List<Story> getStories() {

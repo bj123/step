@@ -7,6 +7,5 @@ public class Mytest {
     public static void main(String[] args) throws Exception{
         System.out.print("李某平".replace("/^(.+).(.)$/", "$1*$2"));
 
-
     }
 }

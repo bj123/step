@@ -4,10 +4,7 @@ import com.aiwsport.core.constant.ResultMsg;
 import com.aiwsport.core.entity.*;
 import com.aiwsport.core.service.StorysService;
 import com.aiwsport.core.service.SysInfoService;
-import com.aiwsport.core.showmodel.CourseObj;
-import com.aiwsport.core.showmodel.DescObj;
-import com.aiwsport.core.showmodel.InitObj;
-import com.aiwsport.core.showmodel.ShareInfoObj;
+import com.aiwsport.core.showmodel.*;
 import com.aiwsport.core.utils.CommonUtil;
 import com.aiwsport.web.utlis.ParseUrl;
 import com.alibaba.fastjson.JSONObject;
@@ -264,9 +261,9 @@ public class ServerController {
             User user = storysService.getUserInfo(userId);
             String buytemplateid = user.getBuytemplateid();
             if (buytemplateid != null && StringUtils.isNotBlank(buytemplateid) && buytemplateid.contains(templateId+"")) {
-                descObj.setIs_buy(true);
+                descObj.setIsbuy("true");
             } else {
-                descObj.setIs_buy(false);
+                descObj.setIsbuy("false");
             }
 
             List<Story> stories = storysService.getStroysByTemplateId(templateId);
@@ -276,6 +273,37 @@ public class ServerController {
             return new ResultMsg(false, 403, "获取余额明细失败");
         }
         return new ResultMsg("getTemplateDescOK", descObj);
+    }
+
+    @RequestMapping(value = "/story/getPlayInfo.json")
+    public ResultMsg getPlayInfo(Integer storyId, Integer templateId) {
+        PlayObj playObj = new PlayObj();
+        try {
+            List<Story> stories = storysService.getStroysByTemplateId(templateId);
+            playObj.setStories(stories);
+            for (Story story : stories) {
+                if (story.getId() == storyId) {
+                    playObj.setCurrentStory(story);
+                }
+            }
+        } catch (Exception e) {
+            return new ResultMsg(false, 403, "获取播放信息失败");
+        }
+        return new ResultMsg("getMoneyLogOK", playObj);
+    }
+
+    @RequestMapping(value = "/story/isLike.json")
+    public boolean isLike(String storyId, Integer userId) {
+        boolean flag = false;
+        try {
+            User user = storysService.getUserInfo(userId);
+            if (user.getLikeid().contains(storyId)) {
+                flag = true;
+            }
+        } catch (Exception e) {
+            return flag;
+        }
+        return flag;
     }
 
     @RequestMapping("/test.json")
