@@ -7,6 +7,8 @@ public class Comment {
 
     private Integer stroyid;
 
+    private Integer templateid;
+
     private String content;
 
     private String createtime;
@@ -69,5 +71,13 @@ public class Comment {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getTemplateid() {
+        return templateid;
+    }
+
+    public void setTemplateid(Integer templateid) {
+        this.templateid = templateid;
     }
 }

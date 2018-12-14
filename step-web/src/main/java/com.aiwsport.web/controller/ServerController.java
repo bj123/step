@@ -306,6 +306,31 @@ public class ServerController {
         return flag;
     }
 
+    @RequestMapping(value = "/story/getCommentByTemplateId.json")
+    public ResultMsg getCommentByTemplateId(Integer templateId) {
+        List<Comment> Comments = null;
+        try {
+            Comments = storysService.getCommentByTemplateId(templateId);
+        } catch (Exception e) {
+            return new ResultMsg(false, 403, "获取留言信息失败");
+        }
+        return new ResultMsg("getCommentByTemplateIdOK", Comments);
+    }
+
+
+    @RequestMapping(value = "/story/getCommentByStoryId.json")
+    public ResultMsg getCommentByStoryId(Integer storyId) {
+        List<Comment> Comments = null;
+        try {
+            Comments = storysService.getCommentByStoryId(storyId);
+        } catch (Exception e) {
+            return new ResultMsg(false, 403, "获取留言信息失败");
+        }
+        return new ResultMsg("getCommentByStoryIdOK", Comments);
+    }
+
+
+
     @RequestMapping("/test.json")
     public ResultMsg test() throws Exception{
         return new ResultMsg("服务启动成功", 9276);

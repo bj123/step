@@ -13,4 +13,10 @@ public interface CommentMapper {
     List<Comment> selectAll();
 
     int updateByPrimaryKey(Comment record);
+
+    List<Comment> selectByTemplateId(Integer templateId);
+
+    List<Comment> getCommentByStoryId(Integer storyId);
+
+
 }

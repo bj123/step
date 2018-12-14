@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="userId" property="userid" jdbcType="INTEGER" />
     <result column="stroyId" property="stroyid" jdbcType="INTEGER" />
+    <result column="templateId" property="templateid" jdbcType="INTEGER" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="VARCHAR" />
     <result column="modifytime" property="modifytime" jdbcType="VARCHAR" />
@@ -18,10 +19,10 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into comment (userId, stroyId, content, 
+    insert into comment (userId, stroyId, templateId, content,
       createtime, modifytime, status
       )
-    values (#{userid,jdbcType=INTEGER}, #{stroyid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+    values (#{userid,jdbcType=INTEGER}, #{stroyid,jdbcType=INTEGER},  #{templateid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},
       #{createtime,jdbcType=VARCHAR}, #{modifytime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
       )
   </insert>
@@ -29,6 +30,7 @@
     update comment
     set userId = #{userid,jdbcType=INTEGER},
       stroyId = #{stroyid,jdbcType=INTEGER},
+      templateId = #{templateid,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=VARCHAR},
       modifytime = #{modifytime,jdbcType=VARCHAR},
@@ -36,12 +38,22 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, userId, stroyId, content, createtime, modifytime, status
+    select id, userId, stroyId, templateId, content, createtime, modifytime, status
     from comment
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, userId, stroyId, content, createtime, modifytime, status
+    select id, userId, stroyId, templateId, content, createtime, modifytime, status
     from comment
+  </select>
+  <select id="selectByTemplateId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, userId, stroyId, templateId, content, createtime, modifytime, status
+    from comment
+    where templateId = #{templateId,jdbcType=INTEGER}
+  </select>
+  <select id="getCommentByStoryId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, userId, stroyId, templateId, content, createtime, modifytime, status
+    from comment
+    where stroyId = #{stroyId,jdbcType=INTEGER}
   </select>
 </mapper>

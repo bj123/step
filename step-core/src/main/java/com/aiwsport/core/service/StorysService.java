@@ -40,6 +40,9 @@ public class StorysService {
     @Autowired
     private StoryMapper storyMapper;
 
+    @Autowired
+    private CommentMapper commentMapper;
+
 
     private static Logger logger = LogManager.getLogger();
 
@@ -218,6 +221,13 @@ public class StorysService {
         return storyMapper.getStroysByTemplateId(templateId);
     }
 
+    public List<Comment> getCommentByTemplateId(Integer templateId){
+        return commentMapper.selectByTemplateId(templateId);
+    }
+
+    public List<Comment> getCommentByStoryId(Integer storyId){
+        return commentMapper.getCommentByStoryId(storyId);
+    }
 
     public User getUserInfo(Integer userId){
         return userMapper.selectByPrimaryKey(userId);
