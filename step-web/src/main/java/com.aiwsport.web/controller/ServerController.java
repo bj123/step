@@ -289,7 +289,7 @@ public class ServerController {
         } catch (Exception e) {
             return new ResultMsg(false, 403, "获取播放信息失败");
         }
-        return new ResultMsg("getMoneyLogOK", playObj);
+        return new ResultMsg("getPlayInfoOK", playObj);
     }
 
     @RequestMapping(value = "/story/isLike.json")
