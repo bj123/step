@@ -85,7 +85,7 @@
     from user
     where openId = #{openId,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="java.lang.String" parameterType="java.lang.String">
+  <select id="getLikeId" resultMap="java.lang.String" parameterType="java.lang.String">
     select  likeId from user where id=id = #{id,jdbcType=INTEGER}
   </select>
   <update id="updateLike" >
