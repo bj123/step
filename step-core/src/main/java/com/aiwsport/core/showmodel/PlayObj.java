@@ -13,6 +13,9 @@ public class PlayObj {
 
     private Story currentStory;
 
+    //当前播放在播放列表中的下标
+    private Integer suffix;
+
     public List<Story> getStories() {
         return stories;
     }
@@ -27,5 +30,13 @@ public class PlayObj {
 
     public void setCurrentStory(Story currentStory) {
         this.currentStory = currentStory;
+    }
+
+    public Integer getSuffix() {
+        return suffix;
+    }
+
+    public void setSuffix(Integer suffix) {
+        this.suffix = suffix;
     }
 }
