@@ -85,10 +85,10 @@
     from user
     where openId = #{openId,jdbcType=INTEGER}
   </select>
-  <select id="getLikeId" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select  likeId from user where id=id = #{id,jdbcType=INTEGER}
+  <select id="getLikeId" resultType="java.lang.String" parameterType="java.lang.Integer">
+    select likeId from user where id = #{id,jdbcType=INTEGER}
   </select>
-  <update id="updateLike" parameterType="java.lang.Integer">
-    update user set likeId=#{arg0} where id=#{arg1}
+  <update id="updateLike">
+    update user set likeId=#{arg1} where id=#{arg0}
   </update>
 </mapper>

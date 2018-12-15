@@ -8,7 +8,6 @@ import com.aiwsport.core.showmodel.*;
 import com.aiwsport.core.utils.CommonUtil;
 import com.aiwsport.web.utlis.ParseUrl;
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.base.Joiner;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,7 +33,7 @@ public class ServerController {
     @Autowired
     private SysInfoService sysInfoService;
 
-    private static final String URL1 = "https://api.weixin.qq.com/sns/jscode2session?appid=wx5f42cfc6108addc3&secret=748d20fdca6ab2a5e49368ccc5e2c2c0&js_code=";
+    private static final String URL1 = "https://api.weixin.qq.com/sns/jscode2session?appid=wx2a3f4b2e7fe9c09b&secret=3a499d875c3b6cabecf1f8f6e9608f92&js_code=";
     private static final String URL2 = "&grant_type=authorization_code";
 
     private static Logger logger = LogManager.getLogger();
@@ -299,9 +297,12 @@ public class ServerController {
     public Boolean isLike(Integer tempId,Integer storyId, Integer userId) {
         try {
            String s = storysService.getLikedId(userId);
+           if (StringUtils.isBlank(s)) {
+               return false;
+           }
            String regex = tempId+"#"+storyId;
            if (s.contains(regex)){
-                return true;
+               return true;
            }
            return false;
         } catch (Exception e) {
@@ -315,15 +316,19 @@ public class ServerController {
         try {
             String regex = tempId+"#"+storyId;
             String s = storysService.getLikedId(userId);
-            List<String> splits = Arrays.asList(s.split(","));
-            for (String id: splits) {
-                if (id.equals(regex)){
-                    splits.remove(id);
-                }else {
-                    splits.add(regex);
+            String likeId = "";
+            if (StringUtils.isBlank(s)) {
+                likeId = regex;
+            } else {
+                if (s.contains(","+regex)) {
+                    likeId = s.replaceAll(","+regex, "");
+                } else if (s.contains(regex+",")) {
+                    likeId = s.replaceAll(regex+",", "");
+                } else {
+                    likeId = s + "," + regex;
                 }
             }
-            int i = storysService.updateLike(userId,Joiner.on(",").join(splits));
+            int i = storysService.updateLike(userId,likeId);
             if (i > 0){
                 return true;
             }
