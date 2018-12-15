@@ -15,4 +15,8 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User getByOpenId(String openId);
+
+    String getLikeId(Integer id);
+
+    int updateLike(Integer userId,String likeId);
 }

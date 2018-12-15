@@ -233,4 +233,12 @@ public class StorysService {
         return userMapper.selectByPrimaryKey(userId);
     }
 
+    public String getLikedId(Integer id){
+        return userMapper.getLikeId(id);
+    };
+
+    public int updateLike(Integer userId,String likeId){
+       return userMapper.updateLike(userId,likeId);
+    }
+
 }

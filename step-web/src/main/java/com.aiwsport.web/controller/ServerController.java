@@ -8,6 +8,7 @@ import com.aiwsport.core.showmodel.*;
 import com.aiwsport.core.utils.CommonUtil;
 import com.aiwsport.web.utlis.ParseUrl;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Joiner;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -291,6 +293,45 @@ public class ServerController {
             return new ResultMsg(false, 403, "获取播放信息失败");
         }
         return new ResultMsg("getPlayInfoOK", playObj);
+    }
+
+    @RequestMapping(value = "/story/getLikeId.json")
+    public Boolean getLikeId(Integer userId,Integer tempId,Integer storyId) {
+        try {
+           String s = storysService.getLikedId(userId);
+           String regex = tempId+"#"+storyId;
+           if (s.contains(regex)){
+                return true;
+           }
+           return false;
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
+            return false;
+        }
+    }
+
+    @RequestMapping(value = "/story/updateLike.json")
+    public boolean updateLike(Integer storyId,Integer tempId,Integer userId) {
+        try {
+            String regex = tempId+"#"+storyId;
+            String s = storysService.getLikedId(userId);
+            List<String> splits = Arrays.asList(s.split(","));
+            for (String id: splits) {
+                if (id.equals(regex)){
+                    splits.remove(id);
+                }else {
+                    splits.add(regex);
+                }
+            }
+            int i = storysService.updateLike(userId,Joiner.on(",").join(splits));
+            if (i > 0){
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
+            return false;
+        }
     }
 
     @RequestMapping(value = "/story/isLike.json")
