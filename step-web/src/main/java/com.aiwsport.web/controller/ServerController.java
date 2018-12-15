@@ -295,8 +295,8 @@ public class ServerController {
         return new ResultMsg("getPlayInfoOK", playObj);
     }
 
-    @RequestMapping(value = "/story/getLikeId.json")
-    public Boolean getLikeId(Integer userId,Integer tempId,Integer storyId) {
+    @RequestMapping(value = "/story/isLike.json")
+    public Boolean isLike(Integer tempId,Integer storyId, Integer userId) {
         try {
            String s = storysService.getLikedId(userId);
            String regex = tempId+"#"+storyId;
@@ -334,19 +334,19 @@ public class ServerController {
         }
     }
 
-    @RequestMapping(value = "/story/isLike.json")
-    public boolean isLike(String storyId, Integer userId) {
-        boolean flag = false;
-        try {
-            User user = storysService.getUserInfo(userId);
-            if (user.getLikeid().contains(storyId)) {
-                flag = true;
-            }
-        } catch (Exception e) {
-            return flag;
-        }
-        return flag;
-    }
+//    @RequestMapping(value = "/story/isLike.json")
+//    public boolean isLike(String storyId, Integer userId) {
+//        boolean flag = false;
+//        try {
+//            User user = storysService.getUserInfo(userId);
+//            if (user.getLikeid().contains(storyId)) {
+//                flag = true;
+//            }
+//        } catch (Exception e) {
+//            return flag;
+//        }
+//        return flag;
+//    }
 
     @RequestMapping(value = "/story/getCommentByTemplateId.json")
     public ResultMsg getCommentByTemplateId(Integer templateId) {
