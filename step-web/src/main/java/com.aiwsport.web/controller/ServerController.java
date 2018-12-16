@@ -376,7 +376,10 @@ public class ServerController {
         return new ResultMsg("getCommentByStoryIdOK", Comments);
     }
 
-
+    @RequestMapping(value = "/story/getBuyTemplate.json")
+    public ResultMsg getBuyTemplate(Integer userId){
+        return storysService.getBuyTemplate(userId);
+    }
 
     @RequestMapping("/test.json")
     public ResultMsg test() throws Exception{

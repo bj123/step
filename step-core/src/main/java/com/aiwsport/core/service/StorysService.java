@@ -6,12 +6,14 @@ import com.aiwsport.core.mapper.*;
 import com.aiwsport.core.utils.CommonUtil;
 import com.aiwsport.core.utils.DataTypeUtils;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -239,6 +241,31 @@ public class StorysService {
 
     public int updateLike(Integer userId,String likeId){
        return userMapper.updateLike(userId,likeId);
+    }
+
+    public ResultMsg getBuyTemplate(Integer userId){
+        User user = userMapper.selectByPrimaryKey(userId);
+        String[] buyIds = user.getBuytemplateid().split(",");
+        List<Template> storyTempList = new ArrayList<Template>();
+        List<Template> wkList = new ArrayList<Template>();
+
+        for (String buyId : buyIds) {
+            if (StringUtils.isNotBlank(buyId)) {
+                Template template = templateMapper.selectByPrimaryKey(Integer.parseInt(buyId));
+                if ("4".equals(template.getType())) {
+                    wkList.add(template);
+                } else {
+                    storyTempList.add(template);
+                }
+            }
+        }
+
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("storytemps", storyTempList);
+        res.put("storytemps_count", storyTempList.size());
+        res.put("wks", wkList);
+        res.put("wks_count", wkList.size());
+        return new ResultMsg("getBuyTemplateOK", res);
     }
 
 }
