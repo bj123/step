@@ -1,6 +1,9 @@
 package com.aiwsport.core.mapper;
 
 import com.aiwsport.core.entity.Comment;
+import com.aiwsport.core.entity.CommentBean;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface CommentMapper {
@@ -18,5 +21,5 @@ public interface CommentMapper {
 
     List<Comment> getCommentByStoryId(Integer storyId);
 
-
+    List<CommentBean> getCommentInfo(@Param("templateId") Integer templateId, @Param("storyId") Integer storyId);
 }

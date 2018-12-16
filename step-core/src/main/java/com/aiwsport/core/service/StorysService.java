@@ -268,4 +268,8 @@ public class StorysService {
         return new ResultMsg("getBuyTemplateOK", res);
     }
 
+    public List<CommentBean> getCommentInfo(Integer templateId,Integer storyId){
+        return commentMapper.getCommentInfo(templateId,storyId);
+    }
+
 }

@@ -56,4 +56,26 @@
     from comment
     where stroyId = #{stroyId,jdbcType=INTEGER}
   </select>
+  <select id="getCommentInfo" resultMap="commentBeanMap">
+    select a.id, a.userId, a.stroyId, a.templateId, a.content, a.createtime, a.modifytime, a.status,b.id,b.avatarUrl,b.nickName
+    from comment a left
+    join user b on a.userId=b.id
+    where a.templateId=#{templateId,jdbcType=INTEGER}
+    and a.stroyId=#{storyId,jdbcType=INTEGER}
+  </select>
+  <resultMap id="commentBeanMap" type="com.aiwsport.core.entity.CommentBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="stroyId" property="stroyid" jdbcType="INTEGER" />
+    <result column="templateId" property="templateid" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="modifytime" property="modifytime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <collection property="user" ofType="com.aiwsport.core.entity.User">
+      <id property="id" column="id"/>
+      <result property="nickname" column="nickName"/>
+      <result property="avatarurl" column="avatarUrl"/>
+    </collection>
+  </resultMap>
 </mapper>

@@ -33,7 +33,7 @@ public class ServerController {
     @Autowired
     private SysInfoService sysInfoService;
 
-    private static final String URL1 = "https://api.weixin.qq.com/sns/jscode2session?appid=wx2a3f4b2e7fe9c09b&secret=3a499d875c3b6cabecf1f8f6e9608f92&js_code=";
+    private static final String URL1 = "https://api.weixin.qq.com/sns/jscode2session?appid=wx5f42cfc6108addc3&secret=748d20fdca6ab2a5e49368ccc5e2c2c0&js_code=";
     private static final String URL2 = "&grant_type=authorization_code";
 
     private static Logger logger = LogManager.getLogger();
@@ -354,11 +354,24 @@ public class ServerController {
 //    }
 
     @RequestMapping(value = "/story/getCommentByTemplateId.json")
-    public ResultMsg getCommentByTemplateId(Integer templateId) {
+    public ResultMsg getCommentByTemplateId(Integer templateId,Integer storyId) {
         List<Comment> Comments = null;
         try {
             Comments = storysService.getCommentByTemplateId(templateId);
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
+            return new ResultMsg(false, 403, "获取留言信息失败");
+        }
+        return new ResultMsg("getCommentByTemplateIdOK", Comments);
+    }
+
+    @RequestMapping(value = "/story/getCommentInfo.json")
+    public ResultMsg getCommentInfo(Integer templateId,Integer storyId) {
+        List<CommentBean> Comments = null;
+        try {
+            Comments = storysService.getCommentInfo(templateId,storyId);
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new ResultMsg(false, 403, "获取留言信息失败");
         }
         return new ResultMsg("getCommentByTemplateIdOK", Comments);
