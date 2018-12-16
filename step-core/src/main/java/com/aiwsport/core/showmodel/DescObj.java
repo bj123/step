@@ -1,5 +1,6 @@
 package com.aiwsport.core.showmodel;
 
+import com.aiwsport.core.entity.CommentBean;
 import com.aiwsport.core.entity.Introduction;
 import com.aiwsport.core.entity.Story;
 import com.aiwsport.core.entity.Template;
@@ -23,6 +24,8 @@ public class DescObj {
     private String isbuy;
 
     private List<Story> stories;
+
+    private List<CommentBean> comments;
 
 
     public Template getAlbum() {
@@ -71,5 +74,13 @@ public class DescObj {
 
     public void setStories(List<Story> stories) {
         this.stories = stories;
+    }
+
+    public List<CommentBean> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentBean> comments) {
+        this.comments = comments;
     }
 }

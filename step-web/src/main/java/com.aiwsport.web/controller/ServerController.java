@@ -33,7 +33,7 @@ public class ServerController {
     @Autowired
     private SysInfoService sysInfoService;
 
-    private static final String URL1 = "https://api.weixin.qq.com/sns/jscode2session?appid=wx5f42cfc6108addc3&secret=748d20fdca6ab2a5e49368ccc5e2c2c0&js_code=";
+    private static final String URL1 = "https://api.weixin.qq.com/sns/jscode2session?appid=wx2a3f4b2e7fe9c09b&secret=3a499d875c3b6cabecf1f8f6e9608f92&js_code=";
     private static final String URL2 = "&grant_type=authorization_code";
 
     private static Logger logger = LogManager.getLogger();
@@ -268,6 +268,22 @@ public class ServerController {
 
             List<Story> stories = storysService.getStroysByTemplateId(templateId);
             descObj.setStories(stories);
+
+            List<Comment> comments = storysService.getCommentByTemplateId(templateId);
+            List<CommentBean> showcomments = new ArrayList<CommentBean>();
+            for (Comment comment : comments) {
+                CommentBean commentBean = new CommentBean();
+                commentBean.setContent(comment.getContent());
+                commentBean.setCreatetime(comment.getCreatetime());
+                commentBean.setUser(storysService.getUserInfo(comment.getUserid()));
+                Story story = storysService.getStroyById(comment.getStroyid());
+                if (story != null) {
+                    commentBean.setStroyname(story.getStoryname());
+                }
+                showcomments.add(commentBean);
+            }
+            descObj.setComments(showcomments);
+
         } catch (Exception e) {
             logger.error("getMoneyLogs is error userId:"+userId, e);
             return new ResultMsg(false, 403, "获取余额明细失败");

@@ -239,6 +239,10 @@ public class StorysService {
         return userMapper.getLikeId(id);
     };
 
+    public Story getStroyById(Integer id){
+        return storyMapper.selectByPrimaryKey(id);
+    };
+
     public int updateLike(Integer userId,String likeId){
        return userMapper.updateLike(userId,likeId);
     }
