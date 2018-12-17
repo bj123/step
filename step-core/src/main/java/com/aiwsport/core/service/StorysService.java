@@ -272,6 +272,19 @@ public class StorysService {
         return new ResultMsg("getBuyTemplateOK", res);
     }
 
+    public List<Story> getLikeStory(Integer userId){
+        User user = userMapper.selectByPrimaryKey(userId);
+        List<Story> stories = new ArrayList<Story>();
+        if (StringUtils.isNotBlank(user.getLikeid())) {
+            String[] likeIds = user.getLikeid().split(",");
+            for (String likeId : likeIds) {
+                Story story = storyMapper.getStroysByTempIdAndStoryId(likeId.split("#")[0], likeId.split("#")[1]);
+                stories.add(story);
+            }
+        }
+        return stories;
+    }
+
     public List<CommentBean> getCommentInfo(Integer templateId,Integer storyId){
         return commentMapper.getCommentInfo(templateId,storyId);
     }

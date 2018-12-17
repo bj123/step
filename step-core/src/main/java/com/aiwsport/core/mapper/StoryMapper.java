@@ -18,4 +18,6 @@ public interface StoryMapper {
     int updateByPrimaryKey(Story record);
 
     List<Story> getStroysByTemplateId(Integer templateId);
+
+    Story getStroysByTempIdAndStoryId(String templateId, String StoryId);
 }

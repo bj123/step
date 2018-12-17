@@ -410,6 +410,12 @@ public class ServerController {
         return storysService.getBuyTemplate(userId);
     }
 
+    @RequestMapping(value = "/story/getLikeStory.json")
+    public ResultMsg getLikeStory(Integer userId){
+        List<Story> stories = storysService.getLikeStory(userId);
+        return new ResultMsg("getLikeStoryOK", stories);
+    }
+
     @RequestMapping("/test.json")
     public ResultMsg test() throws Exception{
         return new ResultMsg("服务启动成功", 9276);
