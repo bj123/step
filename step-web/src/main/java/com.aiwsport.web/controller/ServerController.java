@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -377,6 +379,26 @@ public class ServerController {
         return new ResultMsg("getCommentByTemplateIdOK", Comments);
     }
 
+    @RequestMapping(value = "/story/insertComment.json")
+    public boolean insertComment(String content,Integer templateId,Integer storyId,Integer userId){
+        try {
+            Comment comment = new Comment();
+            comment.setTemplateid(templateId);
+            comment.setUserid(userId);
+            comment.setStroyid(storyId);
+            comment.setCreatetime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            comment.setContent(content);
+            int i = storysService.insertComment(comment);
+            if (i > 0){
+            return true;
+            }else {
+                return false;
+            }
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+            return false;
+        }
+    }
 
     @RequestMapping(value = "/story/getCommentByStoryId.json")
     public ResultMsg getCommentByStoryId(Integer storyId) {

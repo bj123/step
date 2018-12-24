@@ -272,4 +272,8 @@ public class StorysService {
         return commentMapper.getCommentInfo(templateId,storyId);
     }
 
+    public int insertComment(Comment comment){
+        return commentMapper.insert(comment);
+    }
+
 }
