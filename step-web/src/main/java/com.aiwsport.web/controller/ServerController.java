@@ -270,6 +270,22 @@ public class ServerController {
 
             List<Story> stories = storysService.getStroysByTemplateId(templateId);
             descObj.setStories(stories);
+
+            List<Comment> comments = storysService.getCommentByTemplateId(templateId);
+            List<CommentBean> showcomments = new ArrayList<CommentBean>();
+            for (Comment comment : comments) {
+                CommentBean commentBean = new CommentBean();
+                commentBean.setContent(comment.getContent());
+                commentBean.setCreatetime(comment.getCreatetime());
+                commentBean.setUser(storysService.getUserInfo(comment.getUserid()));
+                Story story = storysService.getStroyById(comment.getStroyid());
+                if (story != null) {
+                    commentBean.setStroyname(story.getStoryname());
+                }
+                showcomments.add(commentBean);
+            }
+            descObj.setComments(showcomments);
+
         } catch (Exception e) {
             logger.error("getMoneyLogs is error userId:"+userId, e);
             return new ResultMsg(false, 403, "获取余额明细失败");
@@ -414,6 +430,12 @@ public class ServerController {
     @RequestMapping(value = "/story/getBuyTemplate.json")
     public ResultMsg getBuyTemplate(Integer userId){
         return storysService.getBuyTemplate(userId);
+    }
+
+    @RequestMapping(value = "/story/getLikeStory.json")
+    public ResultMsg getLikeStory(Integer userId){
+        List<Story> stories = storysService.getLikeStory(userId);
+        return new ResultMsg("getLikeStoryOK", stories);
     }
 
     @RequestMapping("/test.json")

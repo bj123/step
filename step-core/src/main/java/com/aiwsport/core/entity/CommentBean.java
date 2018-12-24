@@ -22,6 +22,8 @@ public class CommentBean {
 
     private Integer stroyid;
 
+    private String stroyname;
+
     private Integer templateid;
 
     private String content;
@@ -110,5 +112,13 @@ public class CommentBean {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public String getStroyname() {
+        return stroyname;
+    }
+
+    public void setStroyname(String stroyname) {
+        this.stroyname = stroyname;
     }
 }
