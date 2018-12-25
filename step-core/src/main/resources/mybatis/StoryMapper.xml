@@ -67,6 +67,14 @@
     playCount, contentUrl, createtime, modifytime, status
     from story where templateId = #{templateId,jdbcType=INTEGER} order by sort
   </select>
+
+  <select id="getStroysByTempIdAndStoryId" resultMap="BaseResultMap" >
+    select id, templateId, sort, isAudition, storyName, storyDesc, storyIcon, storyTime,
+    playCount, contentUrl, createtime, modifytime, status
+    from story where templateId = #{arg0,jdbcType=INTEGER} and id = #{arg1,jdbcType=INTEGER}
+  </select>
+
+
   <select id="getPlayInfo" resultMap="BaseResultMap" parameterType="java.util.Map">
     select * from story where id=#{id} and isAudition=#{isaudition}
   </select>

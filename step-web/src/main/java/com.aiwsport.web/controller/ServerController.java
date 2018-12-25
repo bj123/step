@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 服务操作
@@ -35,7 +36,7 @@ public class ServerController {
     @Autowired
     private SysInfoService sysInfoService;
 
-    private static final String URL1 = "https://api.weixin.qq.com/sns/jscode2session?appid=wx5f42cfc6108addc3&secret=748d20fdca6ab2a5e49368ccc5e2c2c0&js_code=";
+    private static final String URL1 = "https://api.weixin.qq.com/sns/jscode2session?appid=wx169ddfe67114165d&secret=e26e1b29d8fc04e461d3277c919100aa&js_code=";
     private static final String URL2 = "&grant_type=authorization_code";
 
     private static Logger logger = LogManager.getLogger();
@@ -434,8 +435,8 @@ public class ServerController {
 
     @RequestMapping(value = "/story/getLikeStory.json")
     public ResultMsg getLikeStory(Integer userId){
-        List<Story> stories = storysService.getLikeStory(userId);
-        return new ResultMsg("getLikeStoryOK", stories);
+        Map<String, List<Story>> map = storysService.getLikeStory(userId);
+        return new ResultMsg("getLikeStoryOK", map);
     }
 
     @RequestMapping("/test.json")

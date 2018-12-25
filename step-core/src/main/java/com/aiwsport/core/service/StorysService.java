@@ -272,17 +272,26 @@ public class StorysService {
         return new ResultMsg("getBuyTemplateOK", res);
     }
 
-    public List<Story> getLikeStory(Integer userId){
+    public Map<String, List<Story>> getLikeStory(Integer userId){
         User user = userMapper.selectByPrimaryKey(userId);
+        Map<String, List<Story>> map = new HashMap<String, List<Story>>();
         List<Story> stories = new ArrayList<Story>();
+        List<Story> wks = new ArrayList<Story>();
         if (StringUtils.isNotBlank(user.getLikeid())) {
             String[] likeIds = user.getLikeid().split(",");
             for (String likeId : likeIds) {
-                Story story = storyMapper.getStroysByTempIdAndStoryId(likeId.split("#")[0], likeId.split("#")[1]);
-                stories.add(story);
+                Story story = storyMapper.getStroysByTempIdAndStoryId(Integer.parseInt(likeId.split("#")[0]), Integer.parseInt(likeId.split("#")[1]));
+                Template template = templateMapper.selectByPrimaryKey(Integer.parseInt(likeId.split("#")[0]));
+                if ("4".equals(template.getType())) {
+                    wks.add(story);
+                } else {
+                    stories.add(story);
+                }
             }
         }
-        return stories;
+        map.put("stories", stories);
+        map.put("wks", wks);
+        return map;
     }
 
     public List<CommentBean> getCommentInfo(Integer templateId,Integer storyId){

@@ -19,5 +19,5 @@ public interface StoryMapper {
 
     List<Story> getStroysByTemplateId(Integer templateId);
 
-    Story getStroysByTempIdAndStoryId(String templateId, String StoryId);
+    Story getStroysByTempIdAndStoryId(Integer templateId, Integer StoryId);
 }
