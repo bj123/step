@@ -280,6 +280,9 @@ public class StorysService {
         if (StringUtils.isNotBlank(user.getLikeid())) {
             String[] likeIds = user.getLikeid().split(",");
             for (String likeId : likeIds) {
+                if (StringUtils.isBlank(likeId)) {
+                    continue;
+                }
                 Story story = storyMapper.getStroysByTempIdAndStoryId(Integer.parseInt(likeId.split("#")[0]), Integer.parseInt(likeId.split("#")[1]));
                 Template template = templateMapper.selectByPrimaryKey(Integer.parseInt(likeId.split("#")[0]));
                 if ("4".equals(template.getType())) {
